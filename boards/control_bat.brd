@@ -2070,21 +2070,25 @@ design rules under a new name.</description>
 </signal>
 <signal name="SWDIO">
 <contactref element="JP3" pad="2"/>
-<wire x1="36.068" y1="6.858" x2="37.084" y2="8.128" width="0.254" layer="1"/>
-<wire x1="37.084" y1="8.128" x2="40.386" y2="11.43" width="0.254" layer="1"/>
-<wire x1="40.386" y1="11.43" x2="40.386" y2="12.954" width="0.254" layer="1"/>
 <wire x1="40.386" y1="12.954" x2="41.757" y2="14.325" width="0.254" layer="1"/>
 <contactref element="U2" pad="8"/>
 <wire x1="41.757" y1="14.325" x2="42.7958" y2="14.325" width="0.254" layer="1"/>
+<wire x1="36.068" y1="6.858" x2="36.068" y2="8.89" width="0.254" layer="1"/>
+<wire x1="36.068" y1="8.89" x2="36.322" y2="9.144" width="0.254" layer="1"/>
+<wire x1="36.322" y1="9.144" x2="40.132" y2="9.144" width="0.254" layer="1"/>
+<wire x1="40.132" y1="9.144" x2="40.386" y2="9.398" width="0.254" layer="1"/>
+<wire x1="40.386" y1="9.398" x2="40.386" y2="12.954" width="0.254" layer="1"/>
 </signal>
 <signal name="SWCLK">
 <contactref element="JP3" pad="4"/>
-<wire x1="37.338" y1="6.858" x2="38.354" y2="8.382" width="0.254" layer="1"/>
-<wire x1="38.354" y1="8.382" x2="40.894" y2="10.922" width="0.254" layer="1"/>
-<wire x1="40.894" y1="10.922" x2="40.894" y2="12.7" width="0.254" layer="1"/>
 <wire x1="40.894" y1="12.7" x2="41.869" y2="13.675" width="0.254" layer="1"/>
 <contactref element="U2" pad="7"/>
 <wire x1="41.869" y1="13.675" x2="42.7958" y2="13.675" width="0.254" layer="1"/>
+<wire x1="37.338" y1="6.858" x2="37.338" y2="8.382" width="0.254" layer="1"/>
+<wire x1="37.338" y1="8.382" x2="37.592" y2="8.636" width="0.254" layer="1"/>
+<wire x1="37.592" y1="8.636" x2="40.386" y2="8.636" width="0.254" layer="1"/>
+<wire x1="40.386" y1="8.636" x2="40.894" y2="9.144" width="0.254" layer="1"/>
+<wire x1="40.894" y1="9.144" x2="40.894" y2="12.7" width="0.254" layer="1"/>
 </signal>
 <signal name="RST">
 <contactref element="JP3" pad="10"/>
@@ -2178,6 +2182,41 @@ design rules under a new name.</description>
 <wire x1="36.9602" y1="17.2362" x2="36.9602" y2="15.625" width="0.254" layer="1"/>
 </signal>
 </signals>
+<errors>
+<approved hash="1,20,711145fb45de7134"/>
+<approved hash="1,20,0d8d5967586c0c86"/>
+<approved hash="1,20,7d837d697c907c7a"/>
+<approved hash="1,20,7babd841de8f7d65"/>
+<approved hash="1,20,71aacd40cc8d7067"/>
+<approved hash="1,20,640c37e6361b65f1"/>
+<approved hash="1,20,7a75799f661c65f6"/>
+<approved hash="1,20,640f57e5561b65f1"/>
+<approved hash="1,20,f32c27c6248bf061"/>
+<approved hash="4,1,21657ad38b38007c"/>
+<approved hash="4,1,7db2931efa34e1e2"/>
+<approved hash="4,1,2acb8c6b493e805d"/>
+<approved hash="4,1,c509889fb835a0d4"/>
+<approved hash="4,1,1e4fa5c5ab2aa05e"/>
+<approved hash="4,1,2a9c461fa43a0fcf"/>
+<approved hash="4,1,67dda358ed36e441"/>
+<approved hash="4,1,3272bf977a209ca0"/>
+<approved hash="4,1,cf3498d3bb358423"/>
+<approved hash="4,1,1bc2b1259a08ad95"/>
+<approved hash="4,1,d88b4a5fbd340415"/>
+<approved hash="4,1,6340a68af420d494"/>
+<approved hash="4,1,3ce1c3df7b369c0f"/>
+<approved hash="4,1,c8279c138839f776"/>
+<approved hash="4,1,0575b95db92aa0e0"/>
+<approved hash="4,1,d08ad59bca320058"/>
+<approved hash="4,1,d503a1e4e85d6c37"/>
+<approved hash="6,1,df1091889189df11"/>
+<approved hash="6,1,be1770393fb77396"/>
+<approved hash="6,1,f994c9b57733bb12"/>
+<approved hash="6,1,88dec49f3b9d085f"/>
+<approved hash="6,1,0b1640d8bf65f426"/>
+<approved hash="4,1,d93ec2061fd640e7"/>
+<approved hash="4,1,f00fb7cdc47de9e6"/>
+</errors>
 </board>
 </drawing>
 </eagle>
