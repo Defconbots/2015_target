@@ -5687,6 +5687,8 @@ wire to board 1.25 mm (.049 inch) pitch header</description>
 <part name="+3V31" library="supply1" deviceset="+3V3" device=""/>
 <part name="JP2" library="torpedo" deviceset="FTSH-105" device="" value="FTSH-105-01-L"/>
 <part name="R6" library="rcl" deviceset="R-US_" device="R0603" value="71-CRCW0603-10K-E3"/>
+<part name="GND3" library="supply1" deviceset="GND" device=""/>
+<part name="GND10" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -5838,21 +5840,21 @@ R9 ~= 4.6M-ohm</text>
 <instance part="R6" gate="G$1" x="38.1" y="20.32" smashed="yes" rot="R90">
 <attribute name="NAME" x="40.64" y="20.32" size="1.778" layer="95"/>
 </instance>
+<instance part="GND3" gate="1" x="30.48" y="76.2" smashed="yes">
+<attribute name="VALUE" x="27.94" y="73.66" size="1.778" layer="96"/>
+</instance>
+<instance part="GND10" gate="1" x="45.72" y="76.2" smashed="yes">
+<attribute name="VALUE" x="43.18" y="73.66" size="1.778" layer="96"/>
+</instance>
 </instances>
 <busses>
 </busses>
 <nets>
 <net name="GND" class="0">
 <segment>
+<pinref part="C1" gate="G$1" pin="2"/>
 <pinref part="GND1" gate="1" pin="GND"/>
 <wire x1="15.24" y1="78.74" x2="15.24" y2="81.28" width="0.1524" layer="91"/>
-<pinref part="U1" gate="G$1" pin="GND"/>
-<wire x1="15.24" y1="81.28" x2="30.48" y2="81.28" width="0.1524" layer="91"/>
-<pinref part="C1" gate="G$1" pin="2"/>
-<junction x="15.24" y="81.28"/>
-<pinref part="C2" gate="G$1" pin="2"/>
-<wire x1="30.48" y1="81.28" x2="45.72" y2="81.28" width="0.1524" layer="91"/>
-<junction x="30.48" y="81.28"/>
 </segment>
 <segment>
 <pinref part="U4" gate="G$1" pin="V-"/>
@@ -5903,6 +5905,16 @@ R9 ~= 4.6M-ohm</text>
 <wire x1="10.16" y1="33.02" x2="10.16" y2="30.48" width="0.1524" layer="91"/>
 <junction x="10.16" y="30.48"/>
 <junction x="10.16" y="25.4"/>
+</segment>
+<segment>
+<pinref part="U1" gate="G$1" pin="GND"/>
+<pinref part="GND3" gate="1" pin="GND"/>
+<wire x1="30.48" y1="81.28" x2="30.48" y2="78.74" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="C2" gate="G$1" pin="2"/>
+<pinref part="GND10" gate="1" pin="GND"/>
+<wire x1="45.72" y1="81.28" x2="45.72" y2="78.74" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
