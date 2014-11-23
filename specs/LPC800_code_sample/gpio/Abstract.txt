@@ -1,0 +1,18 @@
+Purpose:
+Pattern Match example program
+
+Running mode:
+* Compile, Flash the program and reset.
+* Default project target set to GPIO_Release (exectuing from flash)
+* Can the run project from RAM by setting project target to GPIO_Debug
+
+Note:
+Tested on LPC800 LPCXpresso Board
+LPC800 running at 24 MHz
+
+Output:
+Following 8 GPIO pins are used for the pattern match engine
+PIO_0, PIO0_1, PIO0_16, PIO0_17, PIO0_8, PIO0_9, PIO0_14, and PIO0_15
+
+GPIO_INT_BMAT - Output of the pattern match engine on PIO0_13 is asserted
+when one of the slices is true.

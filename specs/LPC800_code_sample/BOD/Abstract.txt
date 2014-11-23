@@ -1,0 +1,23 @@
+Purpose:
+Simple BOD program
+
+Running mode:
+* Compile, Flash the program and reset.
+* Default project target set to BOD_Release (exectuing from flash)
+* Can the run project from RAM by setting project target to BOD_Debug
+
+Note:
+LPC800 running at 24 MHz
+
+
+Output:
+Following port pins indicate: 
+P0.1 is for POR reset 
+P0.2 is for BOD interrupt
+P0_0 is for BOD reset
+
+(1) POR LED should blink on after power cycle.
+(2) when voltage(VDD) falls to the BOD interrupt level, P0.2 (BOD Interrupt) will be set, and P0.1(POR reset) will go low. 
+(3) when voltage raises, P0.2 (BOD Interrupt) will go off, and P0.1(POR reset) will blink back on again. 
+(4) when voltage drops further to the BOD RESET, P0.0 (BOD RESET) will blink. 
+(5) Once it happens, BOD interrupt is disabled. */

@@ -1,0 +1,14 @@
+Purpose:
+LPC800 Systick example in free running mode to generate periodic interrupts.
+
+Running mode:
+* Compile, Flash the program and reset.
+* Default project target set to Systick_Release (exectuing from flash)
+* Can the run project from RAM by setting project target to Systick_Debug
+
+Note:
+Tested on LPC800 LPCXpresso Board
+LPC800 running at 24 MHz
+
+Output:
+PIO0_7 (red LED) toggles with systick periodic interrupts

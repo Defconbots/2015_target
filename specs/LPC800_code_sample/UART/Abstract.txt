@@ -1,0 +1,33 @@
+Purpose:
+Example program for the USART periperals (asynchronous mode) to configure various modes
+
+Running mode:
+* Compile, Flash the program and reset.
+* Default project target set to UART_Release (exectuing from flash)
+* Can the run project from RAM by setting project target to UART_Debug
+
+Note:
+Tested on LPC800 LPCXpresso Board
+LPC800 running at 24 MHz
+USART0 configured by default
+USART1, USART2 can be configured in uarttest.c file
+
+In the lpc8xx_uart.h file, can also configure the following modes:
+#define LOOPBACK_TEST			0		/* Loopback uses polling only */
+#define TX_INTERRUPT    	1	/* 0 if TX uses polling, 1 interrupt driven. */
+#define ERROR_INTERRUPT 	0
+#define TX_DISABLE				0
+#define FLOWCTRL_ENABLE 	0	/* Enable the flow control INTERRUPT to get the status update. 
+It's meant to be for external H/W flow control. For lookback and flow control, if it's set and loopback test flag 
+is turned on. It's the internal flow control. External CTS needs to be set to 0, and internal CTS needs to be set to 1. */
+
+#define ADDR_DETECT_EN    0   /* Without two boards connected, the simple test is,
+                                on the PC side, set to 8 bits, even parity. on the board
+																side, it's 9 bit, ADDR_DET is enabled. */
+#define SLAVE_MODE		0
+#define MASTER_MODE		1
+#define HALF_DUPLEX		1
+
+Output:
+Hello World! is printed on tera-term (baud rate 9600)
+

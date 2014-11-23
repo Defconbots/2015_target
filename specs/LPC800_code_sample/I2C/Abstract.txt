@@ -1,0 +1,12 @@
+Purpose:
+An I2C Master-transmitter and master-receiver demonstration.  The I2C clock is configured to run at 400 kHz.
+
+Project Targets:
+* I2C_Release - compile, Flash the program and run/debug
+* I2C_Debug - compile, debug (do not flash)
+
+Output:
+P0.10 and P0.11 are open-drain ports used for I2C function.
+The I2C master communicates with an LM95 temperature sensor at address 0x90.
+
+Note:

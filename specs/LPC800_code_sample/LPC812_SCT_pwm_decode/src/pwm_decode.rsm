@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StateMachine>
+<Global key="Name" value="pwm_decode"/>
+<Global key="Target" value="LPC8xx"/>
+<Global key="Header in sct_user.h" value="the_real_sct_user.h"/>
+<Global key="Main output file" value="pwm_decode.smd"/>
+<Input IMemento.internal.id="SmInput" Name="pwm_input" Permissions="6" Source="CTIN_0" Type="0"/>
+<Input IMemento.internal.id="SmInput" Name="Input pin 1" Permissions="6" Source="CTIN_1" Type="0"/>
+<Input IMemento.internal.id="SmInput" Name="Input pin 2" Permissions="6" Source="CTIN_2" Type="0"/>
+<Input IMemento.internal.id="SmInput" Name="Input pin 3" Permissions="6" Source="CTIN_3" Type="0"/>
+<Input IMemento.internal.id="SmInput" Name="match_no_input" Permissions="0" Source="val_match_no_input" Type="9"/>
+<Input IMemento.internal.id="SmInput" Name="match_min_width" Permissions="0" Source="val_match_min_width" Type="9"/>
+<Input IMemento.internal.id="SmInput" Name="match_max_width" Permissions="0" Source="val_match_max_width" Type="9"/>
+<Input IMemento.internal.id="SmInput" Name="val_match_no_input" Permissions="0" Source="timeout_value" Type="6"/>
+<Input IMemento.internal.id="SmInput" Name="val_match_min_width" Permissions="0" Source="min_pulse_width" Type="6"/>
+<Input IMemento.internal.id="SmInput" Name="val_match_max_width" Permissions="0" Source="max_pulse_width" Type="6"/>
+<Output IMemento.internal.id="SmOutput" Name="timeout" Permissions="6" Source="CTOUT_0" Type="0" preload="TRUE"/>
+<Output IMemento.internal.id="SmOutput" Name="width_error" Permissions="6" Source="CTOUT_1" Type="0" preload="TRUE"/>
+<Output IMemento.internal.id="SmOutput" Name="dummy" Permissions="6" Source="CTOUT_2" Type="0" preload="TRUE"/>
+<Output IMemento.internal.id="SmOutput" Name="Output pin 3" Permissions="6" Source="CTOUT_3" Type="0" preload=""/>
+<Output IMemento.internal.id="SmOutput" Name="Limit unified counter" Permissions="6" Source="U_LIMIT" Type="2"/>
+<Output IMemento.internal.id="SmOutput" Name="Start unified counter" Permissions="6" Source="U_START" Type="2"/>
+<Output IMemento.internal.id="SmOutput" Name="Stop unified counter" Permissions="6" Source="U_STOP" Type="2"/>
+<Output IMemento.internal.id="SmOutput" Name="Halt unified counter" Permissions="6" Source="U_HALT" Type="2"/>
+<Output IMemento.internal.id="SmOutput" Name="Limit low counter" Permissions="6" Source="L_LIMIT" Type="2"/>
+<Output IMemento.internal.id="SmOutput" Name="Start low counter" Permissions="6" Source="L_START" Type="2"/>
+<Output IMemento.internal.id="SmOutput" Name="Stop low counter" Permissions="6" Source="L_STOP" Type="2"/>
+<Output IMemento.internal.id="SmOutput" Name="Halt low counter" Permissions="6" Source="L_HALT" Type="2"/>
+<Output IMemento.internal.id="SmOutput" Name="Limit high counter" Permissions="6" Source="H_LIMIT" Type="2"/>
+<Output IMemento.internal.id="SmOutput" Name="Start high counter" Permissions="6" Source="H_START" Type="2"/>
+<Output IMemento.internal.id="SmOutput" Name="Stop high counter" Permissions="6" Source="H_STOP" Type="2"/>
+<Output IMemento.internal.id="SmOutput" Name="Halt high counter" Permissions="6" Source="H_HALT" Type="2"/>
+<Output IMemento.internal.id="SmOutput" Name="width" Permissions="6" Source="IRQ" Type="2"/>
+<Output IMemento.internal.id="SmOutput" Name="cap_width" Permissions="0" Source="LOW" Type="3"/>
+<Output IMemento.internal.id="SmOutput" Name="cap_period" Permissions="0" Source="LOW" Type="3"/>
+<Output IMemento.internal.id="SmOutput" Name="no_signal" Permissions="0" Source="IRQ" Type="2"/>
+<State h="35" name="U_ALWAYS" w="65" x="166" y="74"/>
+<State h="66" name="U_ENTRY" w="65" x="218" y="428"/>
+<State h="61" name="state 1" w="65" x="585" y="430"/>
+<Action description="" name="capture_width_out" numElements="3">
+<ActionElement name="cap_width" op="4" order="1"/>
+<ActionElement name="width" op="2" order="2"/>
+<ActionElement name="width_error" op="0" order="3"/>
+</Action>
+<Action description="" name="capture_period" numElements="3">
+<ActionElement name="cap_period" op="4" order="1"/>
+<ActionElement name="Limit unified counter" op="2" order="2"/>
+<ActionElement name="timeout" op="1" order="3"/>
+</Action>
+<Action description="" name="capture_width_in" numElements="2">
+<ActionElement name="cap_width" op="4" order="1"/>
+<ActionElement name="width_error" op="1" order="2"/>
+</Action>
+<Action description="" name="action 1" numElements="0"/>
+<Action description="" name="action 2" numElements="4">
+<ActionElement name="Limit unified counter" op="2" order="1"/>
+<ActionElement name="no_signal" op="2" order="2"/>
+<ActionElement name="width_error" op="0" order="3"/>
+<ActionElement name="timeout" op="0" order="4"/>
+</Action>
+<SmLogical IMemento.internal.id="SmSignal" SML_DESC="" SML_NAME="pulse_end">
+<SmLogical IMemento.internal.id="SmLogicalBool" IOTYPE="0" SML_NAME="pwm_input" SML_TYPE="3"/>
+</SmLogical>
+<SmLogical IMemento.internal.id="SmSignal" SML_DESC="" SML_NAME="pulse_start">
+<SmLogical IMemento.internal.id="SmLogicalBool" IOTYPE="0" SML_NAME="pwm_input" SML_TYPE="2"/>
+</SmLogical>
+<SmLogical IMemento.internal.id="SmSignal" SML_DESC="" SML_NAME="signal_min_width">
+<SmLogical IMemento.internal.id="SmLogicalBool" IOTYPE="0" SML_NAME="match_min_width" SML_TYPE="1"/>
+</SmLogical>
+<SmLogical IMemento.internal.id="SmSignal" SML_DESC="" SML_NAME="signal_max_width">
+<SmLogical IMemento.internal.id="SmLogicalBool" IOTYPE="0" SML_NAME="match_max_width" SML_TYPE="1"/>
+</SmLogical>
+<SmLogical IMemento.internal.id="SmSignal" SML_DESC="" SML_NAME="signal_no_input">
+<SmLogical IMemento.internal.id="SmLogicalBool" IOTYPE="0" SML_NAME="match_no_input" SML_TYPE="1"/>
+</SmLogical>
+<Transition action="action 2" current="U_ALWAYS" h="45" next="U_ALWAYS" priority="0" signal="signal_no_input" w="150" x="241" y="21">
+<curve num="1">
+<point d1x="3" d1y="-45" d2x="3" d2y="-45" index="0" weight="0.5"/>
+</curve>
+</Transition>
+<Transition action="capture_period" current="U_ALWAYS" h="60" next="U_ALWAYS" priority="100" signal="pulse_start" w="173" x="133" y="146">
+<curve num="1">
+<point d1x="4" d1y="47" d2x="4" d2y="47" index="0" weight="0.5"/>
+</curve>
+</Transition>
+<Transition action="capture_width_out" current="U_ENTRY" h="75" next="U_ENTRY" priority="100" signal="pulse_end" w="169" x="110" y="320">
+<curve num="3">
+<point d1x="-20" d1y="-53" d2x="-20" d2y="-53" index="0" weight="0.5"/>
+<point d1x="-43" d1y="-53" d2x="-43" d2y="-53" index="1" weight="0.5"/>
+<point d1x="-52" d1y="-31" d2x="-52" d2y="-31" index="2" weight="0.5"/>
+</curve>
+</Transition>
+<Transition current="U_ENTRY" h="30" next="state 1" priority="0" signal="signal_min_width" w="98" x="401" y="519">
+<curve num="1">
+<point d1x="129" d1y="51" d2x="-105" d2y="62" index="0" weight="0.5"/>
+</curve>
+</Transition>
+<Transition action="capture_width_in" current="state 1" h="45" next="U_ENTRY" priority="0" signal="pulse_end" w="169" x="364" y="396">
+<curve num="0"/>
+</Transition>
+<Transition action="action 1" current="state 1" h="30" next="U_ENTRY" priority="0" signal="signal_max_width" w="111" x="390" y="311">
+<curve num="1">
+<point d1x="-176" d1y="-101" d2x="176" d2y="-119" index="0" weight="0.5"/>
+</curve>
+</Transition>
+<SmSpecification IMemento.internal.id="SmSCTv1" isUnified="true"/>
+</StateMachine>
