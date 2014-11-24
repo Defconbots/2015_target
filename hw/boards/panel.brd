@@ -15,11 +15,11 @@
 <layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
@@ -248,6 +248,12 @@
 <hole x="89.154" y="33.274" drill="0.508"/>
 <hole x="89.916" y="33.274" drill="0.508"/>
 <hole x="90.678" y="33.274" drill="0.508"/>
+<hole x="47.498" y="33.274" drill="0.508"/>
+<hole x="48.26" y="33.274" drill="0.508"/>
+<hole x="49.022" y="33.274" drill="0.508"/>
+<hole x="49.784" y="33.274" drill="0.508"/>
+<hole x="50.546" y="33.274" drill="0.508"/>
+<hole x="51.308" y="33.274" drill="0.508"/>
 </plain>
 <libraries>
 <library name="torpedo">
@@ -2155,170 +2161,400 @@ This Sunstone Circuits 2 Layer .DRU has been set to cover our minimum requiremen
 <attribute name="OC_FARNELL" value="unknown" x="4.572" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="7.072" y="6.04" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="C3" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="6.858" y="49.784" rot="MR180"/>
-<element name="C4" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="7.366" y="51.308" rot="MR180"/>
-<element name="D1" library="torpedo" package="150141RB" value="150141RB73100" x="14.986" y="43.688" rot="R180"/>
-<element name="D2" library="torpedo" package="150141RB" value="150141RB73100" x="10.414" y="47.752"/>
-<element name="D3" library="torpedo" package="CLS15" value="638-CLS1522CL213GTR8" x="11.0998" y="44.958"/>
-<element name="JP5" library="con-molex" package="53398-04" value="798-DF134P125V20" x="3.81" y="45.72" rot="MR270">
+<element name="C3" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="6.858" y="49.784" smashed="yes" rot="MR180">
+<attribute name="NAME" x="5.969" y="49.022" size="0.4064" layer="26" font="vector" rot="MR180"/>
+<attribute name="VALUE" x="5.842" y="50.927" size="0.4064" layer="28" font="vector" rot="MR180"/>
+</element>
+<element name="C4" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="7.366" y="51.308" smashed="yes" rot="MR180">
+<attribute name="NAME" x="6.477" y="50.546" size="0.4064" layer="26" font="vector" rot="MR180"/>
+<attribute name="VALUE" x="6.35" y="52.451" size="0.4064" layer="28" font="vector" rot="MR180"/>
+</element>
+<element name="D1" library="torpedo" package="150141RB" value="150141RB73100" x="14.986" y="43.688" smashed="yes" rot="R180"/>
+<element name="D2" library="torpedo" package="150141RB" value="150141RB73100" x="10.414" y="47.752" smashed="yes"/>
+<element name="D3" library="torpedo" package="CLS15" value="638-CLS1522CL213GTR8" x="11.0998" y="44.958" smashed="yes">
+<attribute name="VALUE" x="11.0998" y="39.878" size="1.27" layer="27"/>
+</element>
+<element name="JP5" library="con-molex" package="53398-04" value="798-DF134P125V20" x="3.81" y="45.72" smashed="yes" rot="MR270">
 <attribute name="OC_NEWARK" value="unknown" x="3.81" y="45.72" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MPN" value="" x="3.81" y="45.72" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MF" value="" x="3.81" y="45.72" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="OC_FARNELL" value="1125367" x="3.81" y="45.72" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="NAME" x="1.435" y="48.72" size="1.27" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="7.31" y="49.47" size="1.27" layer="28" rot="MR270"/>
 </element>
-<element name="JP6" library="torpedo" package="FTSH-105-01-XXX-DV-K" value="FTSH-105-01-L" x="12.7" y="54.61" rot="MR90"/>
-<element name="LOGO2" library="ohw-logo" package="OSHW_FILLX150_NOTEXT" value="OSHW_LOGO_FILLX0150-NT" x="6.604" y="38.608" rot="R90"/>
-<element name="R5" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="13.716" y="38.354" rot="MR90"/>
-<element name="R6" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="9.144" y="38.354" rot="MR90"/>
-<element name="R7" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="7.62" y="38.354" rot="MR90"/>
-<element name="R8" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="12.192" y="38.354" rot="MR90"/>
-<element name="R9" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="6.096" y="38.354" rot="MR90"/>
-<element name="R10" library="rcl" package="R0603" value="71-CRCW0603-10K-E3" x="17.272" y="55.372" rot="MR90"/>
-<element name="R11" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="10.668" y="38.354" rot="MR90"/>
-<element name="R12" library="rcl" package="R0603" value="71-CRCW06034M64FKEA" x="15.24" y="38.354" rot="MR270"/>
-<element name="T1" library="transistor-small-signal" package="SOT363_PHILIPS" value="771-BC847BS-T/R" x="10.414" y="35.56" rot="MR90"/>
-<element name="U4" library="linear" package="SOT23" value="579-MCP1703T-3002ECB" x="7.366" y="54.102" rot="MR0"/>
-<element name="U5" library="torpedo" package="TSSOP20" value="771-LPC824M201JDH20J" x="12.7" y="47.498" rot="MR180"/>
-<element name="U6" library="SparkFun-AnalogIC" package="SOT23-5" value="579-MCP6291T-E/OT" x="18.288" y="38.354" rot="MR270">
+<element name="JP6" library="torpedo" package="FTSH-105-01-XXX-DV-K" value="FTSH-105-01-L" x="12.7" y="54.61" smashed="yes" rot="MR90"/>
+<element name="LOGO2" library="ohw-logo" package="OSHW_FILLX150_NOTEXT" value="OSHW_LOGO_FILLX0150-NT" x="6.604" y="38.608" smashed="yes" rot="R90"/>
+<element name="R5" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="13.716" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="14.351" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="11.811" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R6" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="9.144" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="9.779" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="7.239" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R7" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="7.62" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="8.255" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="5.715" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R8" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="12.192" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="12.827" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="10.287" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R9" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="6.096" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="6.731" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="4.191" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R10" library="rcl" package="R0603" value="71-CRCW0603-10K-E3" x="17.272" y="55.372" smashed="yes" rot="MR90">
+<attribute name="NAME" x="17.907" y="54.737" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="15.367" y="54.737" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R11" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="10.668" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="11.303" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="8.763" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R12" library="rcl" package="R0603" value="71-CRCW06034M64FKEA" x="15.24" y="38.354" smashed="yes" rot="MR270">
+<attribute name="NAME" x="14.605" y="38.989" size="1.27" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="17.145" y="38.989" size="1.27" layer="28" rot="MR270"/>
+</element>
+<element name="T1" library="transistor-small-signal" package="SOT363_PHILIPS" value="771-BC847BS-T/R" x="10.414" y="35.56" smashed="yes" rot="MR90">
+<attribute name="NAME" x="11.864" y="34.46" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="7.714" y="34.46" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="U4" library="linear" package="SOT23" value="579-MCP1703T-3002ECB" x="7.366" y="54.102" smashed="yes" rot="MR0">
+<attribute name="NAME" x="9.271" y="56.007" size="1.27" layer="26" rot="MR0"/>
+<attribute name="VALUE" x="9.271" y="50.927" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="U5" library="torpedo" package="TSSOP20" value="771-LPC824M201JDH20J" x="12.7" y="47.498" smashed="yes" rot="MR180">
+<attribute name="NAME" x="9.1544" y="49.5808" size="0.6096" layer="26" ratio="18" rot="MR270"/>
+</element>
+<element name="U6" library="SparkFun-AnalogIC" package="SOT23-5" value="579-MCP6291T-E/OT" x="18.288" y="38.354" smashed="yes" rot="MR270">
 <attribute name="PROD_ID" value="IC-11991" x="18.288" y="38.354" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="NAME" x="16.129" y="39.243" size="0.4064" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="18.4785" y="39.3065" size="0.4064" layer="28" rot="MR270"/>
 </element>
-<element name="X1" library="con-molex" package="53398-04" value="798-DF134P125V20" x="21.59" y="45.72" rot="MR90">
+<element name="X1" library="con-molex" package="53398-04" value="798-DF134P125V20" x="21.59" y="45.72" smashed="yes" rot="MR90">
 <attribute name="OC_NEWARK" value="unknown" x="21.59" y="45.72" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="MPN" value="" x="21.59" y="45.72" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="MF" value="" x="21.59" y="45.72" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="OC_FARNELL" value="1125367" x="21.59" y="45.72" size="1.778" layer="28" rot="MR90" display="off"/>
+<attribute name="NAME" x="23.965" y="42.72" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="18.09" y="41.97" size="1.27" layer="28" rot="MR90"/>
 </element>
-<element name="C5" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="83.058" y="49.784" rot="MR180"/>
-<element name="C6" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="83.566" y="51.308" rot="MR180"/>
-<element name="D4" library="torpedo" package="150141RB" value="150141RB73100" x="91.186" y="43.688" rot="R180"/>
-<element name="D5" library="torpedo" package="150141RB" value="150141RB73100" x="86.614" y="47.752"/>
-<element name="D6" library="torpedo" package="CLS15" value="638-CLS1522CL213GTR8" x="87.2998" y="44.958"/>
-<element name="JP7" library="con-molex" package="53398-04" value="798-DF134P125V20" x="80.01" y="45.72" rot="MR270">
+<element name="C5" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="83.058" y="49.784" smashed="yes" rot="MR180">
+<attribute name="NAME" x="82.169" y="49.022" size="0.4064" layer="26" font="vector" rot="MR180"/>
+<attribute name="VALUE" x="82.042" y="50.927" size="0.4064" layer="28" font="vector" rot="MR180"/>
+</element>
+<element name="C6" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="83.566" y="51.308" smashed="yes" rot="MR180">
+<attribute name="NAME" x="82.677" y="50.546" size="0.4064" layer="26" font="vector" rot="MR180"/>
+<attribute name="VALUE" x="82.55" y="52.451" size="0.4064" layer="28" font="vector" rot="MR180"/>
+</element>
+<element name="D4" library="torpedo" package="150141RB" value="150141RB73100" x="91.186" y="43.688" smashed="yes" rot="R180"/>
+<element name="D5" library="torpedo" package="150141RB" value="150141RB73100" x="86.614" y="47.752" smashed="yes"/>
+<element name="D6" library="torpedo" package="CLS15" value="638-CLS1522CL213GTR8" x="87.2998" y="44.958" smashed="yes">
+<attribute name="VALUE" x="87.2998" y="39.878" size="1.27" layer="27"/>
+</element>
+<element name="JP7" library="con-molex" package="53398-04" value="798-DF134P125V20" x="80.01" y="45.72" smashed="yes" rot="MR270">
 <attribute name="OC_NEWARK" value="unknown" x="80.01" y="45.72" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MPN" value="" x="80.01" y="45.72" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MF" value="" x="80.01" y="45.72" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="OC_FARNELL" value="1125367" x="80.01" y="45.72" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="NAME" x="77.635" y="48.72" size="1.27" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="83.51" y="49.47" size="1.27" layer="28" rot="MR270"/>
 </element>
-<element name="JP8" library="torpedo" package="FTSH-105-01-XXX-DV-K" value="FTSH-105-01-L" x="88.9" y="54.61" rot="MR90"/>
-<element name="LOGO3" library="ohw-logo" package="OSHW_FILLX150_NOTEXT" value="OSHW_LOGO_FILLX0150-NT" x="82.804" y="38.608" rot="R90"/>
-<element name="R13" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="89.916" y="38.354" rot="MR90"/>
-<element name="R14" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="85.344" y="38.354" rot="MR90"/>
-<element name="R15" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="83.82" y="38.354" rot="MR90"/>
-<element name="R16" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="88.392" y="38.354" rot="MR90"/>
-<element name="R17" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="82.296" y="38.354" rot="MR90"/>
-<element name="R18" library="rcl" package="R0603" value="71-CRCW0603-10K-E3" x="93.472" y="55.372" rot="MR90"/>
-<element name="R19" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="86.868" y="38.354" rot="MR90"/>
-<element name="R20" library="rcl" package="R0603" value="71-CRCW06034M64FKEA" x="91.44" y="38.354" rot="MR270"/>
-<element name="T2" library="transistor-small-signal" package="SOT363_PHILIPS" value="771-BC847BS-T/R" x="86.614" y="35.56" rot="MR90"/>
-<element name="U7" library="linear" package="SOT23" value="579-MCP1703T-3002ECB" x="83.566" y="54.102" rot="MR0"/>
-<element name="U8" library="torpedo" package="TSSOP20" value="771-LPC824M201JDH20J" x="88.9" y="47.498" rot="MR180"/>
-<element name="U9" library="SparkFun-AnalogIC" package="SOT23-5" value="579-MCP6291T-E/OT" x="94.488" y="38.354" rot="MR270">
+<element name="JP8" library="torpedo" package="FTSH-105-01-XXX-DV-K" value="FTSH-105-01-L" x="88.9" y="54.61" smashed="yes" rot="MR90"/>
+<element name="LOGO3" library="ohw-logo" package="OSHW_FILLX150_NOTEXT" value="OSHW_LOGO_FILLX0150-NT" x="82.804" y="38.608" smashed="yes" rot="R90"/>
+<element name="R13" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="89.916" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="90.551" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="88.011" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R14" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="85.344" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="85.979" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="83.439" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R15" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="83.82" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="84.455" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="81.915" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R16" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="88.392" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="89.027" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="86.487" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R17" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="82.296" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="82.931" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="80.391" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R18" library="rcl" package="R0603" value="71-CRCW0603-10K-E3" x="93.472" y="55.372" smashed="yes" rot="MR90">
+<attribute name="NAME" x="94.107" y="54.737" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="91.567" y="54.737" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R19" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="86.868" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="87.503" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="84.963" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R20" library="rcl" package="R0603" value="71-CRCW06034M64FKEA" x="91.44" y="38.354" smashed="yes" rot="MR270">
+<attribute name="NAME" x="90.805" y="38.989" size="1.27" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="93.345" y="38.989" size="1.27" layer="28" rot="MR270"/>
+</element>
+<element name="T2" library="transistor-small-signal" package="SOT363_PHILIPS" value="771-BC847BS-T/R" x="86.614" y="35.56" smashed="yes" rot="MR90">
+<attribute name="NAME" x="88.064" y="34.46" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="83.914" y="34.46" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="U7" library="linear" package="SOT23" value="579-MCP1703T-3002ECB" x="83.566" y="54.102" smashed="yes" rot="MR0">
+<attribute name="NAME" x="85.471" y="56.007" size="1.27" layer="26" rot="MR0"/>
+<attribute name="VALUE" x="85.471" y="50.927" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="U8" library="torpedo" package="TSSOP20" value="771-LPC824M201JDH20J" x="88.9" y="47.498" smashed="yes" rot="MR180">
+<attribute name="NAME" x="85.3544" y="49.5808" size="0.6096" layer="26" ratio="18" rot="MR270"/>
+</element>
+<element name="U9" library="SparkFun-AnalogIC" package="SOT23-5" value="579-MCP6291T-E/OT" x="94.488" y="38.354" smashed="yes" rot="MR270">
 <attribute name="PROD_ID" value="IC-11991" x="94.488" y="38.354" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="NAME" x="92.329" y="39.243" size="0.4064" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="94.6785" y="39.3065" size="0.4064" layer="28" rot="MR270"/>
 </element>
-<element name="X2" library="con-molex" package="53398-04" value="798-DF134P125V20" x="97.79" y="45.72" rot="MR90">
+<element name="X2" library="con-molex" package="53398-04" value="798-DF134P125V20" x="97.79" y="45.72" smashed="yes" rot="MR90">
 <attribute name="OC_NEWARK" value="unknown" x="97.79" y="45.72" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="MPN" value="" x="97.79" y="45.72" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="MF" value="" x="97.79" y="45.72" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="OC_FARNELL" value="1125367" x="97.79" y="45.72" size="1.778" layer="28" rot="MR90" display="off"/>
+<attribute name="NAME" x="100.165" y="42.72" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="94.29" y="41.97" size="1.27" layer="28" rot="MR90"/>
 </element>
-<element name="C7" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="43.688" y="49.784" rot="MR180"/>
-<element name="C8" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="44.196" y="51.308" rot="MR180"/>
-<element name="D7" library="torpedo" package="150141RB" value="150141RB73100" x="51.816" y="43.688" rot="R180"/>
-<element name="D8" library="torpedo" package="150141RB" value="150141RB73100" x="47.244" y="47.752"/>
-<element name="D9" library="torpedo" package="CLS15" value="638-CLS1522CL213GTR8" x="47.9298" y="44.958"/>
-<element name="JP9" library="con-molex" package="53398-04" value="798-DF134P125V20" x="40.64" y="45.72" rot="MR270">
+<element name="C7" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="43.688" y="49.784" smashed="yes" rot="MR180">
+<attribute name="NAME" x="42.799" y="49.022" size="0.4064" layer="26" font="vector" rot="MR180"/>
+<attribute name="VALUE" x="42.672" y="50.927" size="0.4064" layer="28" font="vector" rot="MR180"/>
+</element>
+<element name="C8" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="44.196" y="51.308" smashed="yes" rot="MR180">
+<attribute name="NAME" x="43.307" y="50.546" size="0.4064" layer="26" font="vector" rot="MR180"/>
+<attribute name="VALUE" x="43.18" y="52.451" size="0.4064" layer="28" font="vector" rot="MR180"/>
+</element>
+<element name="D7" library="torpedo" package="150141RB" value="150141RB73100" x="51.816" y="43.688" smashed="yes" rot="R180"/>
+<element name="D8" library="torpedo" package="150141RB" value="150141RB73100" x="47.244" y="47.752" smashed="yes"/>
+<element name="D9" library="torpedo" package="CLS15" value="638-CLS1522CL213GTR8" x="47.9298" y="44.958" smashed="yes">
+<attribute name="VALUE" x="47.9298" y="39.878" size="1.27" layer="27"/>
+</element>
+<element name="JP9" library="con-molex" package="53398-04" value="798-DF134P125V20" x="40.64" y="45.72" smashed="yes" rot="MR270">
 <attribute name="OC_NEWARK" value="unknown" x="40.64" y="45.72" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MPN" value="" x="40.64" y="45.72" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MF" value="" x="40.64" y="45.72" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="OC_FARNELL" value="1125367" x="40.64" y="45.72" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="NAME" x="38.265" y="48.72" size="1.27" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="44.14" y="49.47" size="1.27" layer="28" rot="MR270"/>
 </element>
-<element name="JP10" library="torpedo" package="FTSH-105-01-XXX-DV-K" value="FTSH-105-01-L" x="49.53" y="54.61" rot="MR90"/>
-<element name="LOGO4" library="ohw-logo" package="OSHW_FILLX150_NOTEXT" value="OSHW_LOGO_FILLX0150-NT" x="43.434" y="38.608" rot="R90"/>
-<element name="R21" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="50.546" y="38.354" rot="MR90"/>
-<element name="R22" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="45.974" y="38.354" rot="MR90"/>
-<element name="R23" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="44.45" y="38.354" rot="MR90"/>
-<element name="R24" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="49.022" y="38.354" rot="MR90"/>
-<element name="R25" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="42.926" y="38.354" rot="MR90"/>
-<element name="R26" library="rcl" package="R0603" value="71-CRCW0603-10K-E3" x="54.102" y="55.372" rot="MR90"/>
-<element name="R27" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="47.498" y="38.354" rot="MR90"/>
-<element name="R28" library="rcl" package="R0603" value="71-CRCW06034M64FKEA" x="52.07" y="38.354" rot="MR270"/>
-<element name="T3" library="transistor-small-signal" package="SOT363_PHILIPS" value="771-BC847BS-T/R" x="47.244" y="35.56" rot="MR90"/>
-<element name="U10" library="linear" package="SOT23" value="579-MCP1703T-3002ECB" x="44.196" y="54.102" rot="MR0"/>
-<element name="U11" library="torpedo" package="TSSOP20" value="771-LPC824M201JDH20J" x="49.53" y="47.498" rot="MR180"/>
-<element name="U12" library="SparkFun-AnalogIC" package="SOT23-5" value="579-MCP6291T-E/OT" x="55.118" y="38.354" rot="MR270">
+<element name="JP10" library="torpedo" package="FTSH-105-01-XXX-DV-K" value="FTSH-105-01-L" x="49.53" y="54.61" smashed="yes" rot="MR90"/>
+<element name="LOGO4" library="ohw-logo" package="OSHW_FILLX150_NOTEXT" value="OSHW_LOGO_FILLX0150-NT" x="43.434" y="38.608" smashed="yes" rot="R90"/>
+<element name="R21" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="50.546" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="51.181" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="48.641" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R22" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="45.974" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="46.609" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="44.069" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R23" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="44.45" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="45.085" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="42.545" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R24" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="49.022" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="49.657" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="47.117" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R25" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="42.926" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="43.561" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="41.021" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R26" library="rcl" package="R0603" value="71-CRCW0603-10K-E3" x="54.102" y="55.372" smashed="yes" rot="MR90">
+<attribute name="NAME" x="54.737" y="54.737" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="52.197" y="54.737" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R27" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="47.498" y="38.354" smashed="yes" rot="MR90">
+<attribute name="NAME" x="48.133" y="37.719" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="45.593" y="37.719" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R28" library="rcl" package="R0603" value="71-CRCW06034M64FKEA" x="52.07" y="38.354" smashed="yes" rot="MR270">
+<attribute name="NAME" x="51.435" y="38.989" size="1.27" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="53.975" y="38.989" size="1.27" layer="28" rot="MR270"/>
+</element>
+<element name="T3" library="transistor-small-signal" package="SOT363_PHILIPS" value="771-BC847BS-T/R" x="47.244" y="35.56" smashed="yes" rot="MR90">
+<attribute name="NAME" x="48.694" y="34.46" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="44.544" y="34.46" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="U10" library="linear" package="SOT23" value="579-MCP1703T-3002ECB" x="44.196" y="54.102" smashed="yes" rot="MR0">
+<attribute name="NAME" x="46.101" y="56.007" size="1.27" layer="26" rot="MR0"/>
+<attribute name="VALUE" x="46.101" y="50.927" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="U11" library="torpedo" package="TSSOP20" value="771-LPC824M201JDH20J" x="49.53" y="47.498" smashed="yes" rot="MR180">
+<attribute name="NAME" x="45.9844" y="49.5808" size="0.6096" layer="26" ratio="18" rot="MR270"/>
+</element>
+<element name="U12" library="SparkFun-AnalogIC" package="SOT23-5" value="579-MCP6291T-E/OT" x="55.118" y="38.354" smashed="yes" rot="MR270">
 <attribute name="PROD_ID" value="IC-11991" x="55.118" y="38.354" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="NAME" x="52.959" y="39.243" size="0.4064" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="55.3085" y="39.3065" size="0.4064" layer="28" rot="MR270"/>
 </element>
-<element name="X3" library="con-molex" package="53398-04" value="798-DF134P125V20" x="58.42" y="45.72" rot="MR90">
+<element name="X3" library="con-molex" package="53398-04" value="798-DF134P125V20" x="58.42" y="45.72" smashed="yes" rot="MR90">
 <attribute name="OC_NEWARK" value="unknown" x="58.42" y="45.72" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="MPN" value="" x="58.42" y="45.72" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="MF" value="" x="58.42" y="45.72" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="OC_FARNELL" value="1125367" x="58.42" y="45.72" size="1.778" layer="28" rot="MR90" display="off"/>
+<attribute name="NAME" x="60.795" y="42.72" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="54.92" y="41.97" size="1.27" layer="28" rot="MR90"/>
 </element>
-<element name="C9" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="25.146" y="72.644" rot="MR180"/>
-<element name="C10" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="25.654" y="74.168" rot="MR180"/>
-<element name="D10" library="torpedo" package="150141RB" value="150141RB73100" x="33.274" y="66.548" rot="R180"/>
-<element name="D11" library="torpedo" package="150141RB" value="150141RB73100" x="28.702" y="70.612"/>
-<element name="D12" library="torpedo" package="CLS15" value="638-CLS1522CL213GTR8" x="29.3878" y="67.818"/>
-<element name="JP11" library="con-molex" package="53398-04" value="798-DF134P125V20" x="22.098" y="68.58" rot="MR270">
+<element name="C9" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="25.146" y="72.644" smashed="yes" rot="MR180">
+<attribute name="NAME" x="24.257" y="71.882" size="0.4064" layer="26" font="vector" rot="MR180"/>
+<attribute name="VALUE" x="24.13" y="73.787" size="0.4064" layer="28" font="vector" rot="MR180"/>
+</element>
+<element name="C10" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="25.654" y="74.168" smashed="yes" rot="MR180">
+<attribute name="NAME" x="24.765" y="73.406" size="0.4064" layer="26" font="vector" rot="MR180"/>
+<attribute name="VALUE" x="24.638" y="75.311" size="0.4064" layer="28" font="vector" rot="MR180"/>
+</element>
+<element name="D10" library="torpedo" package="150141RB" value="150141RB73100" x="33.274" y="66.548" smashed="yes" rot="R180"/>
+<element name="D11" library="torpedo" package="150141RB" value="150141RB73100" x="28.702" y="70.612" smashed="yes"/>
+<element name="D12" library="torpedo" package="CLS15" value="638-CLS1522CL213GTR8" x="29.3878" y="67.818" smashed="yes">
+<attribute name="VALUE" x="29.3878" y="62.738" size="1.27" layer="27"/>
+</element>
+<element name="JP11" library="con-molex" package="53398-04" value="798-DF134P125V20" x="22.098" y="68.58" smashed="yes" rot="MR270">
 <attribute name="OC_NEWARK" value="unknown" x="22.098" y="68.58" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MPN" value="" x="22.098" y="68.58" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MF" value="" x="22.098" y="68.58" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="OC_FARNELL" value="1125367" x="22.098" y="68.58" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="NAME" x="19.723" y="71.58" size="1.27" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="25.598" y="72.33" size="1.27" layer="28" rot="MR270"/>
 </element>
-<element name="JP12" library="torpedo" package="FTSH-105-01-XXX-DV-K" value="FTSH-105-01-L" x="30.988" y="77.47" rot="MR90"/>
-<element name="LOGO5" library="ohw-logo" package="OSHW_FILLX150_NOTEXT" value="OSHW_LOGO_FILLX0150-NT" x="24.892" y="61.468" rot="R90"/>
-<element name="R29" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="32.004" y="61.214" rot="MR90"/>
-<element name="R30" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="27.432" y="61.214" rot="MR90"/>
-<element name="R31" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="25.908" y="61.214" rot="MR90"/>
-<element name="R32" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="30.48" y="61.214" rot="MR90"/>
-<element name="R33" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="24.384" y="61.214" rot="MR90"/>
-<element name="R34" library="rcl" package="R0603" value="71-CRCW0603-10K-E3" x="35.56" y="78.232" rot="MR90"/>
-<element name="R35" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="28.956" y="61.214" rot="MR90"/>
-<element name="R36" library="rcl" package="R0603" value="71-CRCW06034M64FKEA" x="33.528" y="61.214" rot="MR270"/>
-<element name="T4" library="transistor-small-signal" package="SOT363_PHILIPS" value="771-BC847BS-T/R" x="28.702" y="58.42" rot="MR90"/>
-<element name="U13" library="linear" package="SOT23" value="579-MCP1703T-3002ECB" x="25.654" y="76.962" rot="MR0"/>
-<element name="U14" library="torpedo" package="TSSOP20" value="771-LPC824M201JDH20J" x="30.988" y="70.358" rot="MR180"/>
-<element name="U15" library="SparkFun-AnalogIC" package="SOT23-5" value="579-MCP6291T-E/OT" x="36.576" y="61.214" rot="MR270">
+<element name="JP12" library="torpedo" package="FTSH-105-01-XXX-DV-K" value="FTSH-105-01-L" x="30.988" y="77.47" smashed="yes" rot="MR90"/>
+<element name="LOGO5" library="ohw-logo" package="OSHW_FILLX150_NOTEXT" value="OSHW_LOGO_FILLX0150-NT" x="24.892" y="61.468" smashed="yes" rot="R90"/>
+<element name="R29" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="32.004" y="61.214" smashed="yes" rot="MR90">
+<attribute name="NAME" x="32.639" y="60.579" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="30.099" y="60.579" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R30" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="27.432" y="61.214" smashed="yes" rot="MR90">
+<attribute name="NAME" x="28.067" y="60.579" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="25.527" y="60.579" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R31" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="25.908" y="61.214" smashed="yes" rot="MR90">
+<attribute name="NAME" x="26.543" y="60.579" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="24.003" y="60.579" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R32" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="30.48" y="61.214" smashed="yes" rot="MR90">
+<attribute name="NAME" x="31.115" y="60.579" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="28.575" y="60.579" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R33" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="24.384" y="61.214" smashed="yes" rot="MR90">
+<attribute name="NAME" x="25.019" y="60.579" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="22.479" y="60.579" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R34" library="rcl" package="R0603" value="71-CRCW0603-10K-E3" x="35.56" y="78.232" smashed="yes" rot="MR90">
+<attribute name="NAME" x="36.195" y="77.597" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="33.655" y="77.597" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R35" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="28.956" y="61.214" smashed="yes" rot="MR90">
+<attribute name="NAME" x="29.591" y="60.579" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="27.051" y="60.579" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R36" library="rcl" package="R0603" value="71-CRCW06034M64FKEA" x="33.528" y="61.214" smashed="yes" rot="MR270">
+<attribute name="NAME" x="32.893" y="61.849" size="1.27" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="35.433" y="61.849" size="1.27" layer="28" rot="MR270"/>
+</element>
+<element name="T4" library="transistor-small-signal" package="SOT363_PHILIPS" value="771-BC847BS-T/R" x="28.702" y="58.42" smashed="yes" rot="MR90">
+<attribute name="NAME" x="30.152" y="57.32" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="26.002" y="57.32" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="U13" library="linear" package="SOT23" value="579-MCP1703T-3002ECB" x="25.654" y="76.962" smashed="yes" rot="MR0">
+<attribute name="NAME" x="27.559" y="78.867" size="1.27" layer="26" rot="MR0"/>
+<attribute name="VALUE" x="27.559" y="73.787" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="U14" library="torpedo" package="TSSOP20" value="771-LPC824M201JDH20J" x="30.988" y="70.358" smashed="yes" rot="MR180">
+<attribute name="NAME" x="27.4424" y="72.4408" size="0.6096" layer="26" ratio="18" rot="MR270"/>
+</element>
+<element name="U15" library="SparkFun-AnalogIC" package="SOT23-5" value="579-MCP6291T-E/OT" x="36.576" y="61.214" smashed="yes" rot="MR270">
 <attribute name="PROD_ID" value="IC-11991" x="36.576" y="61.214" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="NAME" x="34.417" y="62.103" size="0.4064" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="36.7665" y="62.1665" size="0.4064" layer="28" rot="MR270"/>
 </element>
-<element name="X4" library="con-molex" package="53398-04" value="798-DF134P125V20" x="39.878" y="68.58" rot="MR90">
+<element name="X4" library="con-molex" package="53398-04" value="798-DF134P125V20" x="39.878" y="68.58" smashed="yes" rot="MR90">
 <attribute name="OC_NEWARK" value="unknown" x="39.878" y="68.58" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="MPN" value="" x="39.878" y="68.58" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="MF" value="" x="39.878" y="68.58" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="OC_FARNELL" value="1125367" x="39.878" y="68.58" size="1.778" layer="28" rot="MR90" display="off"/>
+<attribute name="NAME" x="42.253" y="65.58" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="36.378" y="64.83" size="1.27" layer="28" rot="MR90"/>
 </element>
-<element name="C11" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="63.5" y="72.644" rot="MR180"/>
-<element name="C12" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="64.008" y="74.168" rot="MR180"/>
-<element name="D13" library="torpedo" package="150141RB" value="150141RB73100" x="71.628" y="66.548" rot="R180"/>
-<element name="D14" library="torpedo" package="150141RB" value="150141RB73100" x="67.056" y="70.612"/>
-<element name="D15" library="torpedo" package="CLS15" value="638-CLS1522CL213GTR8" x="67.7418" y="67.818"/>
-<element name="JP13" library="con-molex" package="53398-04" value="798-DF134P125V20" x="60.452" y="68.58" rot="MR270">
+<element name="C11" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="63.5" y="72.644" smashed="yes" rot="MR180">
+<attribute name="NAME" x="62.611" y="71.882" size="0.4064" layer="26" font="vector" rot="MR180"/>
+<attribute name="VALUE" x="62.484" y="73.787" size="0.4064" layer="28" font="vector" rot="MR180"/>
+</element>
+<element name="C12" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="64.008" y="74.168" smashed="yes" rot="MR180">
+<attribute name="NAME" x="63.119" y="73.406" size="0.4064" layer="26" font="vector" rot="MR180"/>
+<attribute name="VALUE" x="62.992" y="75.311" size="0.4064" layer="28" font="vector" rot="MR180"/>
+</element>
+<element name="D13" library="torpedo" package="150141RB" value="150141RB73100" x="71.628" y="66.548" smashed="yes" rot="R180"/>
+<element name="D14" library="torpedo" package="150141RB" value="150141RB73100" x="67.056" y="70.612" smashed="yes"/>
+<element name="D15" library="torpedo" package="CLS15" value="638-CLS1522CL213GTR8" x="67.7418" y="67.818" smashed="yes">
+<attribute name="VALUE" x="67.7418" y="62.738" size="1.27" layer="27"/>
+</element>
+<element name="JP13" library="con-molex" package="53398-04" value="798-DF134P125V20" x="60.452" y="68.58" smashed="yes" rot="MR270">
 <attribute name="OC_NEWARK" value="unknown" x="60.452" y="68.58" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MPN" value="" x="60.452" y="68.58" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MF" value="" x="60.452" y="68.58" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="OC_FARNELL" value="1125367" x="60.452" y="68.58" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="NAME" x="58.077" y="71.58" size="1.27" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="63.952" y="72.33" size="1.27" layer="28" rot="MR270"/>
 </element>
-<element name="JP14" library="torpedo" package="FTSH-105-01-XXX-DV-K" value="FTSH-105-01-L" x="69.342" y="77.47" rot="MR90"/>
-<element name="LOGO6" library="ohw-logo" package="OSHW_FILLX150_NOTEXT" value="OSHW_LOGO_FILLX0150-NT" x="63.246" y="61.468" rot="R90"/>
-<element name="R37" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="70.358" y="61.214" rot="MR90"/>
-<element name="R38" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="65.786" y="61.214" rot="MR90"/>
-<element name="R39" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="64.262" y="61.214" rot="MR90"/>
-<element name="R40" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="68.834" y="61.214" rot="MR90"/>
-<element name="R41" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="62.738" y="61.214" rot="MR90"/>
-<element name="R42" library="rcl" package="R0603" value="71-CRCW0603-10K-E3" x="73.914" y="78.232" rot="MR90"/>
-<element name="R43" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="67.31" y="61.214" rot="MR90"/>
-<element name="R44" library="rcl" package="R0603" value="71-CRCW06034M64FKEA" x="71.882" y="61.214" rot="MR270"/>
-<element name="T5" library="transistor-small-signal" package="SOT363_PHILIPS" value="771-BC847BS-T/R" x="67.056" y="58.42" rot="MR90"/>
-<element name="U16" library="linear" package="SOT23" value="579-MCP1703T-3002ECB" x="64.008" y="76.962" rot="MR0"/>
-<element name="U17" library="torpedo" package="TSSOP20" value="771-LPC824M201JDH20J" x="69.342" y="70.358" rot="MR180"/>
-<element name="U18" library="SparkFun-AnalogIC" package="SOT23-5" value="579-MCP6291T-E/OT" x="74.93" y="61.214" rot="MR270">
+<element name="JP14" library="torpedo" package="FTSH-105-01-XXX-DV-K" value="FTSH-105-01-L" x="69.342" y="77.47" smashed="yes" rot="MR90"/>
+<element name="LOGO6" library="ohw-logo" package="OSHW_FILLX150_NOTEXT" value="OSHW_LOGO_FILLX0150-NT" x="63.246" y="61.468" smashed="yes" rot="R90"/>
+<element name="R37" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="70.358" y="61.214" smashed="yes" rot="MR90">
+<attribute name="NAME" x="70.993" y="60.579" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="68.453" y="60.579" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R38" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="65.786" y="61.214" smashed="yes" rot="MR90">
+<attribute name="NAME" x="66.421" y="60.579" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="63.881" y="60.579" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R39" library="rcl" package="R0603" value="71-CRCW060368R0FKEB" x="64.262" y="61.214" smashed="yes" rot="MR90">
+<attribute name="NAME" x="64.897" y="60.579" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="62.357" y="60.579" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R40" library="rcl" package="R0603" value="71-CRCW0603-5.6-E3" x="68.834" y="61.214" smashed="yes" rot="MR90">
+<attribute name="NAME" x="69.469" y="60.579" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="66.929" y="60.579" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R41" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="62.738" y="61.214" smashed="yes" rot="MR90">
+<attribute name="NAME" x="63.373" y="60.579" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="60.833" y="60.579" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R42" library="rcl" package="R0603" value="71-CRCW0603-10K-E3" x="73.914" y="78.232" smashed="yes" rot="MR90">
+<attribute name="NAME" x="74.549" y="77.597" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="72.009" y="77.597" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R43" library="rcl" package="R0603" value="71-CRCW0603220RFKEB" x="67.31" y="61.214" smashed="yes" rot="MR90">
+<attribute name="NAME" x="67.945" y="60.579" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="65.405" y="60.579" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="R44" library="rcl" package="R0603" value="71-CRCW06034M64FKEA" x="71.882" y="61.214" smashed="yes" rot="MR270">
+<attribute name="NAME" x="71.247" y="61.849" size="1.27" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="73.787" y="61.849" size="1.27" layer="28" rot="MR270"/>
+</element>
+<element name="T5" library="transistor-small-signal" package="SOT363_PHILIPS" value="771-BC847BS-T/R" x="67.056" y="58.42" smashed="yes" rot="MR90">
+<attribute name="NAME" x="68.506" y="57.32" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="64.356" y="57.32" size="1.27" layer="28" rot="MR90"/>
+</element>
+<element name="U16" library="linear" package="SOT23" value="579-MCP1703T-3002ECB" x="64.008" y="76.962" smashed="yes" rot="MR0">
+<attribute name="NAME" x="65.913" y="78.867" size="1.27" layer="26" rot="MR0"/>
+<attribute name="VALUE" x="65.913" y="73.787" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="U17" library="torpedo" package="TSSOP20" value="771-LPC824M201JDH20J" x="69.342" y="70.358" smashed="yes" rot="MR180">
+<attribute name="NAME" x="65.7964" y="72.4408" size="0.6096" layer="26" ratio="18" rot="MR270"/>
+</element>
+<element name="U18" library="SparkFun-AnalogIC" package="SOT23-5" value="579-MCP6291T-E/OT" x="74.93" y="61.214" smashed="yes" rot="MR270">
 <attribute name="PROD_ID" value="IC-11991" x="74.93" y="61.214" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="NAME" x="72.771" y="62.103" size="0.4064" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="75.1205" y="62.1665" size="0.4064" layer="28" rot="MR270"/>
 </element>
-<element name="X5" library="con-molex" package="53398-04" value="798-DF134P125V20" x="78.232" y="68.58" rot="MR90">
+<element name="X5" library="con-molex" package="53398-04" value="798-DF134P125V20" x="78.232" y="68.58" smashed="yes" rot="MR90">
 <attribute name="OC_NEWARK" value="unknown" x="78.232" y="68.58" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="MPN" value="" x="78.232" y="68.58" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="MF" value="" x="78.232" y="68.58" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="OC_FARNELL" value="1125367" x="78.232" y="68.58" size="1.778" layer="28" rot="MR90" display="off"/>
+<attribute name="NAME" x="80.607" y="65.58" size="1.27" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="74.732" y="64.83" size="1.27" layer="28" rot="MR90"/>
 </element>
 </elements>
 <signals>
