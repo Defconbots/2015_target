@@ -19,7 +19,6 @@ namespace TargetControl
 {
     public sealed class ShellViewModel : Conductor<IMainScreenTabItem>.Collection.OneActive
     {
-        public BindableCollection<Team> Teams { get; set; }
         public BindableCollection<IMainScreenTabItem> Tabs { get; set; }
 
         public ShellViewModel(IEnumerable<IMainScreenTabItem> tabs, IEventAggregator eventAggregator)
@@ -27,23 +26,6 @@ namespace TargetControl
             DisplayName = "DEFCONBOTS CONTEST CONTROLLER";
 
             Tabs = new BindableCollection<IMainScreenTabItem>();
-
-            Teams = new BindableCollection<Team>
-            {
-                new Team{Name="test1",HitId="1",
-                    Members = new List<TeamMember>{new TeamMember{Name = "Joe",Email="joe@joe.com",Website="joe.com",PhoneNumber="555-555-5555"}},
-                    QualScores = new List<int>{0,1,2,3},
-                    FinalScores = new List<int>{5,6,7,8}},
-                new Team{Name="test1",HitId="1",
-                    Members = new List<TeamMember>{new TeamMember{Name = "Joe",Email="joe@joe.com",Website="joe.com",PhoneNumber="555-555-5555"},
-                                                   new TeamMember{Name = "Bob",Email="bob@bob.com",Website="bob.com",PhoneNumber="555-555-5551"}},
-                    QualScores = new List<int>{0,1,2,3},
-                    FinalScores = new List<int>{5,6,7,8}},
-                new Team{Name="test1",HitId="1",
-                    Members = new List<TeamMember>{new TeamMember{Name = "Joe",Email="joe@joe.com",Website="joe.com",PhoneNumber="555-555-5555"}},
-                    QualScores = new List<int>{0,1,2,3},
-                    FinalScores = new List<int>{5,6}}
-            };
 
             foreach (var tab in tabs)
             {
