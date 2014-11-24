@@ -5668,7 +5668,7 @@ wire to board 1.25 mm (.049 inch) pitch header</description>
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
 <part name="R1" library="rcl" deviceset="R-US_" device="R0603" value="71-CRCW060368R0FKEB"/>
 <part name="T1" library="transistor-small-signal" deviceset="BC847BS" device="" value="771-BC847BS-T/R"/>
-<part name="X1" library="con-molex" deviceset="53?-04" device="398" value="798-DF134P125V20"/>
+<part name="JP2" library="con-molex" deviceset="53?-04" device="398" value="798-DF134P125V20"/>
 <part name="JP1" library="con-molex" deviceset="53?-04" device="398" value="798-DF134P125V20"/>
 <part name="LOGO2" library="ohw-logo" deviceset="OSHW_LOGO_FILL" device="X0150-NT"/>
 <part name="D1" library="torpedo" deviceset="LED_RB" device="" value="150141RB73100"/>
@@ -5680,7 +5680,7 @@ wire to board 1.25 mm (.049 inch) pitch header</description>
 <part name="+3V34" library="supply1" deviceset="+3V3" device=""/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
 <part name="+3V31" library="supply1" deviceset="+3V3" device=""/>
-<part name="JP2" library="torpedo" deviceset="FTSH-105" device="" value="FTSH-105-01-L"/>
+<part name="JP3" library="torpedo" deviceset="FTSH-105" device="" value="FTSH-105-01-L"/>
 <part name="R7" library="rcl" deviceset="R-US_" device="R0603" value="71-CRCW0603-10K-E3"/>
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
@@ -5779,16 +5779,16 @@ R9 ~= 4.6M-ohm</text>
 <instance part="T1" gate="B" x="86.36" y="68.58" smashed="yes">
 <attribute name="NAME" x="83.82" y="71.12" size="1.778" layer="95"/>
 </instance>
-<instance part="X1" gate="-1" x="203.2" y="83.82" smashed="yes">
+<instance part="JP2" gate="-1" x="203.2" y="83.82" smashed="yes">
 <attribute name="NAME" x="205.74" y="83.058" size="1.524" layer="95"/>
 </instance>
-<instance part="X1" gate="-2" x="203.2" y="81.28" smashed="yes">
+<instance part="JP2" gate="-2" x="203.2" y="81.28" smashed="yes">
 <attribute name="NAME" x="205.74" y="80.518" size="1.524" layer="95"/>
 </instance>
-<instance part="X1" gate="-3" x="203.2" y="78.74" smashed="yes">
+<instance part="JP2" gate="-3" x="203.2" y="78.74" smashed="yes">
 <attribute name="NAME" x="205.74" y="77.978" size="1.524" layer="95"/>
 </instance>
-<instance part="X1" gate="-4" x="203.2" y="76.2" smashed="yes">
+<instance part="JP2" gate="-4" x="203.2" y="76.2" smashed="yes">
 <attribute name="NAME" x="205.74" y="75.438" size="1.524" layer="95"/>
 </instance>
 <instance part="JP1" gate="-1" x="180.34" y="83.82" smashed="yes" rot="MR0">
@@ -5829,7 +5829,7 @@ R9 ~= 4.6M-ohm</text>
 <instance part="+3V31" gate="G$1" x="10.16" y="43.18" smashed="yes">
 <attribute name="VALUE" x="7.62" y="43.18" size="1.778" layer="96"/>
 </instance>
-<instance part="JP2" gate="G$1" x="22.86" y="25.4" smashed="yes">
+<instance part="JP3" gate="G$1" x="22.86" y="25.4" smashed="yes">
 <attribute name="NAME" x="22.86" y="38.1" size="1.778" layer="95"/>
 </instance>
 <instance part="R7" gate="G$1" x="38.1" y="20.32" smashed="yes" rot="R90">
@@ -5880,19 +5880,19 @@ R9 ~= 4.6M-ohm</text>
 </segment>
 <segment>
 <pinref part="JP1" gate="-4" pin="S"/>
-<pinref part="X1" gate="-4" pin="S"/>
+<pinref part="JP2" gate="-4" pin="S"/>
 <wire x1="182.88" y1="76.2" x2="200.66" y2="76.2" width="0.1524" layer="91"/>
 <label x="187.96" y="76.2" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP2" gate="G$1" pin="9"/>
+<pinref part="JP3" gate="G$1" pin="9"/>
 <pinref part="GND8" gate="1" pin="GND"/>
 <wire x1="17.78" y1="25.4" x2="10.16" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="10.16" y1="25.4" x2="10.16" y2="22.86" width="0.1524" layer="91"/>
-<pinref part="JP2" gate="G$1" pin="5"/>
+<pinref part="JP3" gate="G$1" pin="5"/>
 <wire x1="17.78" y1="30.48" x2="10.16" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="10.16" y1="30.48" x2="10.16" y2="25.4" width="0.1524" layer="91"/>
-<pinref part="JP2" gate="G$1" pin="3"/>
+<pinref part="JP3" gate="G$1" pin="3"/>
 <wire x1="17.78" y1="33.02" x2="10.16" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="10.16" y1="33.02" x2="10.16" y2="30.48" width="0.1524" layer="91"/>
 <junction x="10.16" y="30.48"/>
@@ -5950,7 +5950,7 @@ R9 ~= 4.6M-ohm</text>
 <wire x1="132.08" y1="30.48" x2="129.54" y2="30.48" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="JP2" gate="G$1" pin="1"/>
+<pinref part="JP3" gate="G$1" pin="1"/>
 <pinref part="+3V31" gate="G$1" pin="+3V3"/>
 <wire x1="17.78" y1="35.56" x2="10.16" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="10.16" y1="35.56" x2="10.16" y2="40.64" width="0.1524" layer="91"/>
@@ -5974,7 +5974,7 @@ R9 ~= 4.6M-ohm</text>
 <wire x1="182.88" y1="83.82" x2="200.66" y2="83.82" width="0.1524" layer="91"/>
 <label x="187.96" y="83.82" size="1.778" layer="95"/>
 <pinref part="JP1" gate="-1" pin="S"/>
-<pinref part="X1" gate="-1" pin="S"/>
+<pinref part="JP2" gate="-1" pin="S"/>
 </segment>
 </net>
 <net name="BLUE_LED" class="0">
@@ -6036,7 +6036,7 @@ R9 ~= 4.6M-ohm</text>
 <wire x1="182.88" y1="81.28" x2="200.66" y2="81.28" width="0.1524" layer="91"/>
 <label x="187.96" y="81.28" size="1.778" layer="95"/>
 <pinref part="JP1" gate="-2" pin="S"/>
-<pinref part="X1" gate="-2" pin="S"/>
+<pinref part="JP2" gate="-2" pin="S"/>
 </segment>
 <segment>
 <pinref part="U2" gate="G$1" pin="PIO0_13/ADC_10"/>
@@ -6065,7 +6065,7 @@ R9 ~= 4.6M-ohm</text>
 <label x="60.96" y="25.4" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP2" gate="G$1" pin="2"/>
+<pinref part="JP3" gate="G$1" pin="2"/>
 <wire x1="30.48" y1="35.56" x2="45.72" y2="35.56" width="0.1524" layer="91"/>
 <label x="33.02" y="35.56" size="1.778" layer="95"/>
 </segment>
@@ -6077,7 +6077,7 @@ R9 ~= 4.6M-ohm</text>
 <label x="60.96" y="27.94" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP2" gate="G$1" pin="4"/>
+<pinref part="JP3" gate="G$1" pin="4"/>
 <wire x1="30.48" y1="33.02" x2="45.72" y2="33.02" width="0.1524" layer="91"/>
 <label x="33.02" y="33.02" size="1.778" layer="95"/>
 </segment>
@@ -6089,7 +6089,7 @@ R9 ~= 4.6M-ohm</text>
 <label x="60.96" y="33.02" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="JP2" gate="G$1" pin="10"/>
+<pinref part="JP3" gate="G$1" pin="10"/>
 <wire x1="30.48" y1="25.4" x2="38.1" y2="25.4" width="0.1524" layer="91"/>
 <label x="33.02" y="25.4" size="1.778" layer="95"/>
 <pinref part="R7" gate="G$1" pin="2"/>
@@ -6102,7 +6102,7 @@ R9 ~= 4.6M-ohm</text>
 <wire x1="182.88" y1="78.74" x2="200.66" y2="78.74" width="0.1524" layer="91"/>
 <label x="187.96" y="78.74" size="1.778" layer="95"/>
 <pinref part="JP1" gate="-3" pin="S"/>
-<pinref part="X1" gate="-3" pin="S"/>
+<pinref part="JP2" gate="-3" pin="S"/>
 </segment>
 <segment>
 <pinref part="U2" gate="G$1" pin="PIO0_17/ADC_9"/>
