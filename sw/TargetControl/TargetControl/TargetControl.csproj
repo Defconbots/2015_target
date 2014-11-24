@@ -43,6 +43,12 @@
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.14.0.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleInjector">
+      <HintPath>..\packages\SimpleInjector.2.6.1\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Diagnostics">
+      <HintPath>..\packages\SimpleInjector.2.6.1\lib\net45\SimpleInjector.Diagnostics.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -66,22 +72,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="ViewModels\ContestViewModel.cs" />
+    <Compile Include="ViewModels\ManualControlViewModel.cs" />
+    <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Models\Contest.cs" />
     <Compile Include="Models\Team.cs" />
-    <Compile Include="Views\contest.xaml.cs">
-      <DependentUpon>contest.xaml</DependentUpon>
+    <Compile Include="ViewModels\TeamsViewModel.cs" />
+    <Compile Include="ViewModels\TerminalViewModel.cs" />
+    <Compile Include="Views\ContestView.xaml.cs">
+      <DependentUpon>ContestView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\manual.xaml.cs">
-      <DependentUpon>manual.xaml</DependentUpon>
+    <Compile Include="Views\ManualControlView.xaml.cs">
+      <DependentUpon>ManualControlView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\teams.xaml.cs">
-      <DependentUpon>teams.xaml</DependentUpon>
+    <Compile Include="Views\TeamsView.xaml.cs">
+      <DependentUpon>TeamsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\terminal.xaml.cs">
-      <DependentUpon>terminal.xaml</DependentUpon>
+    <Compile Include="Views\TerminalView.xaml.cs">
+      <DependentUpon>TerminalView.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -89,27 +100,27 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\contest.xaml">
+    <Page Include="Views\ContestView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\manual.xaml">
+    <Page Include="Views\ManualControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\teams.xaml">
+    <Page Include="Views\TeamsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\terminal.xaml">
+    <Page Include="Views\TerminalView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
