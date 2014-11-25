@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:TargetControl"
              xmlns:models="clr-namespace:TargetControl.Models"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -25,6 +26,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Margin="5">
             <Button x:Name="AddTeam"
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(0)]"
                     Content="Add"
                     Margin="0,25,0,10"
                     Style="{DynamicResource SquareButtonStyle}"/>
@@ -45,10 +47,13 @@
                 <DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                         Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}" />
+                
                 <DataGridTextColumn Header="Name"
                                     Binding="{Binding Name}"/>
+                
                 <DataGridTextColumn Header="ID"
                                     Binding="{Binding HitId}"/>
+                
                 <DataGridTemplateColumn Header="Members">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -56,6 +61,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
                 <DataGridTemplateColumn Header="QualScores">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -63,6 +69,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
                 <DataGridTemplateColumn Header="Final Scores">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -70,6 +77,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
