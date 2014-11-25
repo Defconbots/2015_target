@@ -17,8 +17,8 @@
 <layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
@@ -1769,7 +1769,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <element name="C2" library="SparkFun-Passives" package="0603-CAP" value="C1608X5R1C106M080AB" x="7.366" y="18.288" rot="MR180"/>
 <element name="D1" library="torpedo" package="150141RB" value="150141RB73100" x="14.986" y="10.668" rot="R180"/>
 <element name="D2" library="torpedo" package="150141RB" value="150141RB73100" x="10.414" y="14.732"/>
-<element name="D3" library="torpedo" package="CLS15" value="638-CLS1522CL213GTR8" x="11.0998" y="11.938"/>
+<element name="D3" library="torpedo" package="CLS15" value="638-CLS1522CL213GTR8" x="11.0998" y="11.938" smashed="yes">
+<attribute name="VALUE" x="11.0998" y="6.858" size="1.27" layer="27"/>
+</element>
 <element name="JP1" library="con-molex" package="53398-04" value="798-DF134P125V20" x="3.81" y="12.7" rot="MR270">
 <attribute name="OC_NEWARK" value="unknown" x="3.81" y="12.7" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MPN" value="" x="3.81" y="12.7" size="1.778" layer="28" rot="MR270" display="off"/>
