@@ -31,16 +31,34 @@ static uint32_t _map;
 
 static Event _sstore[MAX_SING_EVENT_CNT];
 
+void ScheduleService(void);
 static void PeriodicService(uint32_t current_time);
 void SingleEventService(uint32_t current_time);
 static uint8_t get_map_size(void);
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-void ScheduleService(void)
+extern void ScheduleInit(void)
+{
+    SystemCoreClockUpdate();
+    SysTick_Config(SystemCoreClock/100);
+}
+
+// Hook the systick handler into the scheduler
+void SysTick_Handler(void)
+{
+    ScheduleService();
+}
+
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+inline void ScheduleService(void)
 {
     g_now++;
+#if MAX_PER_EVENT_CNT > 0
     PeriodicService(g_now);
+#endif
+#if MAX_SING_EVENT_CNT > 0
     SingleEventService(g_now);
+#endif
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>TargetFirmware</name>
+	<name>driver_lib</name>
 	<comment></comment>
 	<projects>
-		<project>driver_lib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -8,7 +8,7 @@ typedef void (*Fn)(void);
 
 extern volatile uint32_t g_now;
 
-extern void ScheduleService(void);
+extern void ScheduleInit(void);
 extern int8_t SchedulePeriodicEvent(Fn func, uint32_t run_time);
 extern void SchedulePeriodicEnable(Fn func, uint8_t mode);
 extern int8_t ScheduleSingleEvent(Fn func, uint32_t run_time);

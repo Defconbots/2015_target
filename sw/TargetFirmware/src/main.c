@@ -1,6 +1,7 @@
-#include <cr_section_macros.h>
+#include "global.h"
 
-int main(void)
+void main(void)
 {
-    return 0 ;
+    // http://i.imgur.com/jwftRmd.jpg
+	Run();
 }

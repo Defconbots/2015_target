@@ -1,13 +1,29 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include "LPC8xx.h"
+#include <cr_section_macros.h>
+#include "chip.h"
+
+#define CONTROLLER
+//#define TARGET
+
+#if defined(CONTROLLER)
+#include "controller.h"
+#define MY_ADDRESS 0
+#endif
+
+#if defined(TARGET)
+#include "target.h"
+#define MY_ADDRESS 1
+#endif
 
 #define SUCCESS 0
 #define FAILURE -1
 
 #define _BV(x) (1<<(x))
+
+// What is it going to return to O_o?
+#pragma GCC diagnostic ignored "-Wmain"
+
 
 #endif
