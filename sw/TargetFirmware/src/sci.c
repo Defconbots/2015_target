@@ -1,28 +1,20 @@
 #include "global.h"
 #include "sci.h"
+#include <string.h>
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Local
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-// Addresses
-static const uint8_t address_all          = '*';
-static const uint8_t address_train        = '0';
-static const uint8_t address_target_1     = '1';
-static const uint8_t address_target_2     = '2';
-static const uint8_t address_target_3     = '3';
-static const uint8_t address_target_4     = '4';
-static const uint8_t address_target_5     = '5';
-
 // Devices
-static const uint8_t device_train_voltage = 'V';
-static const uint8_t device_train_speed   = 'S';
-static const uint8_t device_target_rled   = 'R';
-static const uint8_t device_target_bled   = 'B';
-static const uint8_t device_hit_id        = 'I';
+#define DEVICE_TRAIN_VOLTAGE 'V'
+#define DEVICE_TRAIN_SPEED   'S'
+#define DEVICE_TARGET_RLED   'R'
+#define DEVICE_TARGET_BLED   'B'
+#define DEVICE_TARGET_HIT_ID 'I'
 
 // Read
-static const uint8_t read_command_start   = '{';
-static const uint8_t read_command_stop    = '}';
+#define READ_COMMAND_START   '{'
+#define READ_COMMAND_STOP    '}'
 typedef struct
 {
     uint8_t start;
@@ -31,8 +23,8 @@ typedef struct
     uint8_t stop;
 } ReadCommand;
 
-static const uint8_t read_response_start  = '(';
-static const uint8_t read_response_stop   = ')';
+#define READ_RESPONSE_START  '('
+#define READ_RESPONSE_STOP   ')'
 typedef struct
 {
     uint8_t start;
@@ -41,8 +33,8 @@ typedef struct
 } ReadResponse;
 
 // Write
-static const uint8_t write_command_start  = '[';
-static const uint8_t write_command_stop   = ']';
+#define WRITE_COMMAND_START  '['
+#define WRITE_COMMAND_STOP   ']'
 typedef struct
 {
     uint8_t start;
@@ -52,8 +44,8 @@ typedef struct
     uint8_t stop;
 } WriteCommand;
 
-static const uint8_t write_response_start = '<';
-static const uint8_t write_response_stop  = '>';
+#define WRITE_RESPONSE_START '<'
+#define WRITE_RESPONSE_STOP  '>'
 typedef struct
 {
     uint8_t start;
@@ -62,13 +54,12 @@ typedef struct
 } WriteResponse;
 
 // Errors
-static const uint8_t error_address        = 'A';
-static const uint8_t error_device         = 'T';
-static const uint8_t error_read_only      = 'R';
-static const uint8_t error_write_only     = 'W';
+#define ERROR_ADDRESS        'A'
+#define ERROR_DEVICE         'T'
+#define ERROR_MALFORMED      'M'
 
-static const uint8_t error_response_start = 'W';
-static const uint8_t error_response_stop  = 'F';
+#define ERROR_RESPONSE_START 'W'
+#define ERROR_RESPONSE_STOP  'F'
 typedef struct
 {
     uint8_t start;
@@ -76,28 +67,118 @@ typedef struct
     uint8_t stop;
 } ErrorResponse;
 
+uint8_t SciBytesRequired(uint8_t start_byte);
+uint8_t SciAddressVerify(uint8_t* buf);
+uint8_t SciStartStopVerify(uint8_t* buf);
+uint8_t SciDeviceVerify(uint8_t* buf);
+
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Command handling
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 SciCommand SciParse(uint8_t* buf)
 {
-    // TODO
+    SciCommand ret = {COMMAND_TYPE_INVALID,0,0,{0},0};
+    uint8_t start_byte = buf[0];
+    uint8_t len = (uint8_t)strlen((char*)&buf[0]);
+    uint8_t bytes_required = SciBytesRequired(start_byte);
+    uint8_t address_valid = SciAddressVerify(&buf[0]);
+    uint8_t start_stop_valid = SciStartStopVerify(&buf[0]);
+    uint8_t device_valid = SciDeviceVerify(&buf[0]);
+
+    if (len != bytes_required || !start_stop_valid)
+    {
+        ret.error = ERROR_MALFORMED;
+    }
+    else if (!address_valid)
+    {
+        ret.error = ERROR_ADDRESS;
+    }
+    else if (!device_valid)
+    {
+        ret.error = ERROR_DEVICE;
+    }
+    else if (start_byte == READ_COMMAND_START)
+    {
+        ReadCommand* command = (ReadCommand*)buf;
+        ret.type = COMMAND_TYPE_READ;
+        ret.address = command->address;
+        ret.device = command->device;
+    }
+    else if (start_byte == WRITE_COMMAND_START)
+    {
+        WriteCommand* command = (WriteCommand*)buf;
+        ret.type = COMMAND_TYPE_WRITE;
+        ret.address = command->address;
+        ret.device = command->device;
+        memcpy(ret.data,command->data,sizeof(ret.data));
+    }
+    return ret;
 }
 
-uint8_t SciBytesRequired(uint8_t* buf)
+uint8_t SciBytesRequired(uint8_t start_byte)
 {
-    uint8_t start_byte = buf[0];
     uint8_t bytes_required = 0;
-
-    if (start_byte == read_command_start)
+    if (start_byte == READ_COMMAND_START)
     {
         bytes_required = sizeof(ReadCommand);
     }
-    else if (start_byte == write_command_start)
+    else if (start_byte == WRITE_COMMAND_START)
     {
         bytes_required = sizeof(WriteCommand);
     }
     return bytes_required;
+}
+
+uint8_t SciAddressVerify(uint8_t* buf)
+{
+    uint8_t address = buf[1];
+    switch(address)
+    {
+        case ADDRESS_ALL:
+        case ADDRESS_TRAIN:
+        case ADDRESS_TARGET_1:
+        case ADDRESS_TARGET_2:
+        case ADDRESS_TARGET_3:
+        case ADDRESS_TARGET_4:
+        case ADDRESS_TARGET_5:
+        {
+            return TRUE;
+        }
+    }
+    return false;
+}
+
+uint8_t SciStartStopVerify(uint8_t* buf)
+{
+    uint8_t start_byte = buf[0];
+    if ((start_byte == READ_COMMAND_START) &&
+       (((ReadCommand*)buf)->stop != READ_COMMAND_STOP))
+    {
+        return FALSE;
+    }
+    else if ((start_byte == WRITE_COMMAND_START) &&
+            (((WriteCommand*)buf)->stop != WRITE_COMMAND_STOP))
+    {
+        return FALSE;
+    }
+    return TRUE;
+}
+
+uint8_t SciDeviceVerify(uint8_t* buf)
+{
+    uint8_t device = buf[2];
+    switch(device)
+    {
+        case DEVICE_TRAIN_VOLTAGE:
+        case DEVICE_TRAIN_SPEED:
+        case DEVICE_TARGET_RLED:
+        case DEVICE_TARGET_BLED:
+        case DEVICE_TARGET_HIT_ID:
+        {
+            return TRUE;
+        }
+    }
+    return false;
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -105,16 +186,25 @@ uint8_t SciBytesRequired(uint8_t* buf)
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void SciReadResponseCreate(uint8_t* buf, uint8_t data[2])
 {
-    // TODO
+    ReadResponse* response = (ReadResponse*)buf;
+    response->start = READ_RESPONSE_START;
+    memcpy(response->data,data,sizeof(response->data));
+    response->stop = READ_RESPONSE_STOP;
 }
 
 void SciWriteResponseCreate(uint8_t* buf, uint8_t data)
 {
-    // TODO
+    WriteResponse* response = (WriteResponse*)buf;
+    response->start = WRITE_RESPONSE_START;
+    response->address = data;
+    response->stop = WRITE_RESPONSE_STOP;
 }
 
 void SciErrorResponseCreate(uint8_t* buf, uint8_t data)
 {
-    // TODO
+    ErrorResponse* response = (ErrorResponse*)buf;
+    response->start = ERROR_RESPONSE_START;
+    response->error = data;
+    response->stop = ERROR_RESPONSE_STOP;
 }
 

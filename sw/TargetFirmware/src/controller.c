@@ -11,6 +11,7 @@
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Local
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+void RfService(void);
 void HardwareInit(void);
 void UartInit(void);
 void RfWrite(uint8_t* buf);
@@ -41,19 +42,13 @@ static  uint8_t             target_rx_buf[RING_BUF_SIZE];
 const uint32_t OscRateIn = 12000000;
 const uint32_t ExtRateIn = 0;
 
+
 typedef struct
 {
     uint8_t type;
     uint8_t device;
     void (*HandlerFn)(uint8_t*);
 } CommandRoute;
-
-CommandRoute routes[] =
-{
-    {COMMAND_TYPE_READ,  DEVICE_VOLTAGE, TrainVoltageRead},
-    {COMMAND_TYPE_READ,  DEVICE_SPEED,   TrainSpeedRead},
-    {COMMAND_TYPE_WRITE, DEVICE_SPEED,   TrainSpeedWrite}
-};
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Entry
@@ -65,26 +60,34 @@ inline void Run(void)
     UartInit();
     for(;;)
     {
-        // wait for data
-        if (RfDataAvailable())
+        RfService();
+    }
+}
+
+void RfService(void)
+{
+    CommandRoute routes[] =
+    {
+        {COMMAND_TYPE_READ,  DEVICE_VOLTAGE, TrainVoltageRead},
+        {COMMAND_TYPE_READ,  DEVICE_SPEED,   TrainSpeedRead},
+        {COMMAND_TYPE_WRITE, DEVICE_SPEED,   TrainSpeedWrite}
+    };
+
+    if (RfDataAvailable())
+    {
+        // Wait a little for the whole packet to arrive
+        Delay(3);
+        uint8_t buf[BUF_SIZE] = {0};
+        RfRead(&buf[0],BUF_SIZE);
+        SciCommand command = SciParse(&buf[0]);
+        if (command.type == COMMAND_TYPE_INVALID)
         {
-            // Wait a little for the whole packet to arrive
-            Delay(3);
-            // Read it from the buffer
-            uint8_t buf[BUF_SIZE] = {0};
-            RfRead(&buf[0],BUF_SIZE);
-            // Pull the data out
-            SciCommand command = SciParse(&buf[0]);
-            // Not valid?
-            if (command.type == COMMAND_TYPE_INVALID)
-            {
-                // Send an error
-                SciErrorResponseCreate(&buf[0],command.error);
-                RfWrite(&buf[0]);
-                continue;
-            }
-            // For us?
-            if (command.address != MY_ADDRESS)
+            SciErrorResponseCreate(&buf[0],command.error);
+            RfWrite(&buf[0]);
+        }
+        else
+        {
+            if (command.address == MY_ADDRESS)
             {
                 uint8_t i = 0;
                 for (i = 0;i < (sizeof(routes)/sizeof(CommandRoute));i++)
@@ -111,7 +114,7 @@ inline void Run(void)
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void HardwareInit(void)
 {
-
+    // TODO: init adc hardware
 }
 
 void UartInit(void)
@@ -236,13 +239,5 @@ void TrainSpeedWrite(uint8_t data[2])
     SciWriteResponseCreate(&buf[0],MY_ADDRESS);
     RfWrite(&buf[0]);
 }
-
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
 
 #endif
