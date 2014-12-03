@@ -92,8 +92,6 @@ Each command will generate one of three possible responses: A read response, a w
 |:--:|:-------------------:|
 | A  |Address Invalid      |
 | T  |Device Invalid       |
-| R  |Address is Read-Only |
-| W  |Address is Write-Only|
 | M  |Malformed Command    |
 
 ### Addresses and Devices
