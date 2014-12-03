@@ -86,8 +86,7 @@ void LaserService(void)
         uint8_t buf[BUF_SIZE] = {0};
         LaserRead(&buf[0],BUF_SIZE);
         SciCommand command = SciParse(&buf[0]);
-        if ((command.address == MY_ADDRESS || command.address == ADDRESS_ALL) &&
-             command.type != COMMAND_TYPE_INVALID)
+        if (command.address == ADDRESS_ALL && command.type != COMMAND_TYPE_INVALID)
         {
             uint8_t i = 0;
             for (i = 0;i < (sizeof(routes)/sizeof(CommandRoute));i++)
@@ -241,7 +240,7 @@ uint8_t LaserDataAvailable(void)
 void LedRedRead(uint8_t data[2])
 {
     uint8_t buf[BUF_SIZE] = {0};
-    SciReadResponseCreate(&buf[0],*(uint8_t*)red_led);
+    SciReadResponseCreate(&buf[0],(uint8_t*)&red_led);
     TrainWrite(&buf[0]);
 }
 
@@ -257,7 +256,7 @@ void LedRedWrite(uint8_t data[2])
 void LedBlueRead(uint8_t data[2])
 {
     uint8_t buf[BUF_SIZE] = {0};
-    SciReadResponseCreate(&buf[0],*(uint8_t*)blue_led);
+    SciReadResponseCreate(&buf[0],(uint8_t*)&blue_led);
     TrainWrite(&buf[0]);
 }
 
@@ -273,7 +272,7 @@ void LedBlueWrite(uint8_t data[2])
 void HitIdRead(uint8_t data[2])
 {
     uint8_t buf[BUF_SIZE] = {0};
-    SciReadResponseCreate(&buf[0],*(uint8_t*)hit_id);
+    SciReadResponseCreate(&buf[0],(uint8_t*)&hit_id);
     TrainWrite(&buf[0]);
 }
 
