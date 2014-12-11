@@ -1,18 +1,18 @@
 #include "global.h"
-#include "train.h"
+#include "engine.h"
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Local
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-static TrainSpeed speed = {{'S','T'}};
+static EngineSpeed speed = {{'S','T'}};
 
-void TrainSetSpeed(TrainSpeed val)
+void EngineSetSpeed(EngineSpeed val)
 {
     speed = val;
     // TODO: IR stuff
 }
 
-TrainSpeed TrainGetSpeed(void)
+EngineSpeed EngineGetSpeed(void)
 {
     return speed;
 }
