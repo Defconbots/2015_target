@@ -7,11 +7,11 @@
 #define COMMAND_TYPE_WRITE   2
 
 // Device types
-#define DEVICE_VOLTAGE       0
-#define DEVICE_SPEED         1
-#define DEVICE_RED_LED       2
-#define DEVICE_BLUE_LED      3
-#define DEVICE_HIT_ID        4
+#define DEVICE_VOLTAGE       'V'
+#define DEVICE_SPEED         'S'
+#define DEVICE_RED_LED       'R'
+#define DEVICE_BLUE_LED      'B'
+#define DEVICE_HIT_ID        'H'
 
 // Addresses
 #define ADDRESS_ALL          '*'

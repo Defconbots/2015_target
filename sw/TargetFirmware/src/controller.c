@@ -60,6 +60,7 @@ inline void Run(void)
     ScheduleInit();
     GpioInit();
     UartInit();
+    AdcInit();
     for(;;)
     {
         RfService();
@@ -84,6 +85,7 @@ void RfService(void)
         SciCommand command = SciParse(&buf[0]);
         if (command.type == COMMAND_TYPE_INVALID)
         {
+            memset(buf,0,sizeof(buf));
             SciErrorResponseCreate(&buf[0],command.error);
             RfWrite(&buf[0]);
         }
@@ -123,7 +125,16 @@ void AdcInit(void)
     Chip_ADC_Init(LPC_ADC, 0);
     Chip_ADC_StartCalibration(LPC_ADC);
     while (!(Chip_ADC_IsCalibrationDone(LPC_ADC)));
-    Chip_ADC_SetClockRate(LPC_ADC, ADC_MAX_SAMPLE_RATE);
+    Chip_ADC_SetClockRate(LPC_ADC, 1000);
+    Chip_ADC_SetupSequencer(LPC_ADC, ADC_SEQA_IDX, ADC_SEQ_CTRL_CHANSEL(3));
+    Chip_Clock_EnablePeriphClock(SYSCTL_CLOCK_SWM);
+    Chip_SWM_EnableFixedPin(SWM_FIXED_ADC3);
+    Chip_Clock_DisablePeriphClock(SYSCTL_CLOCK_SWM);
+
+    Chip_ADC_ClearFlags(LPC_ADC, Chip_ADC_GetFlags(LPC_ADC));
+    //Chip_ADC_EnableInt(LPC_ADC, ADC_INTEN_SEQA_ENABLE);
+    //NVIC_EnableIRQ(ADC_SEQA_IRQn);
+    Chip_ADC_EnableSequencer(LPC_ADC, ADC_SEQA_IDX);
 }
 
 void UartInit(void)
@@ -138,6 +149,7 @@ void UartInit(void)
 
     // Uart div clock by 1
     Chip_Clock_SetUARTClockDiv(1);
+    Chip_Clock_SetUSARTNBaseClockRate((UART_BAUD_RATE * 16), true);
 
     // Assign pin locations for tx/rx/rf_tx/rf_rx
     Chip_SWM_MovablePinAssign(SWM_U1_TXD_O, pin_tx); // TX
@@ -149,7 +161,6 @@ void UartInit(void)
     Chip_SWM_Deinit();
 
     // Init the Uart hardware
-    Chip_Clock_SetUSARTNBaseClockRate((UART_BAUD_RATE * 16), true);
     Chip_UART_Init(RF_UART);
     Chip_UART_ConfigData(RF_UART,UART_CONF_8N1);
     Chip_UART_SetBaud(RF_UART,UART_BAUD_RATE);
@@ -224,8 +235,15 @@ void TargetHandoff(uint8_t* buf)
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void VoltageRead(uint8_t data[2])
 {
-    //TODO: ADC stuff
+    Chip_ADC_StartSequencer(LPC_ADC, ADC_SEQA_IDX);
+    DelayDumb(1000);
+    uint16_t sample = (uint16_t)Chip_ADC_GetDataReg(LPC_ADC,3);
+    sample = ADC_DR_RESULT(sample);
+    sample = ((30 * sample) / 0xFFF); // from 12bit sample of 0-3.0V to 100mV range
+    sample *= 2; // voltage divider is V/2
     uint8_t reading[2] = {0};
+    reading[0] = (sample / 10) + '0';
+    reading[1] = (sample % 10) + '0';
     uint8_t buf[BUF_SIZE] = {0};
     SciReadResponseCreate(&buf[0],reading);
     RfWrite(&buf[0]);

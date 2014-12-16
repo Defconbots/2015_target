@@ -79,7 +79,7 @@ SciCommand SciParse(uint8_t* buf)
 {
     SciCommand ret = {COMMAND_TYPE_INVALID,0,0,{0},0};
     uint8_t start_byte = buf[0];
-    uint8_t len = (uint8_t)strlen((char*)&buf[0]);
+    uint8_t len = (uint8_t)strlen((char*)&buf[0]) - 1;
     uint8_t bytes_required = SciBytesRequired(start_byte);
     uint8_t address_valid = SciAddressVerify(&buf[0]);
     uint8_t start_stop_valid = SciStartStopVerify(&buf[0]);
