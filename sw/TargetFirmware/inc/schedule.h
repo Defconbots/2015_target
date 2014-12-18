@@ -1,8 +1,8 @@
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
 
-#define MAX_PER_EVENT_CNT 10
-#define MAX_SING_EVENT_CNT 10
+#define MAX_PER_EVENT_CNT  1
+#define MAX_SING_EVENT_CNT 32
 
 typedef void (*Fn)(void);
 

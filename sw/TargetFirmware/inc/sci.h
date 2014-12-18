@@ -22,6 +22,12 @@
 #define ADDRESS_TARGET_4     '4'
 #define ADDRESS_TARGET_5     '5'
 
+// Train Speeds
+#define SPEED_SLOW_ASTERN    "R1"
+#define SPEED_STOP           "ST"
+#define SPEED_HALF_AHEAD     "F1"
+#define SPEED_FULL_AHEAD     "F2"
+
 typedef struct
 {
     uint8_t type;

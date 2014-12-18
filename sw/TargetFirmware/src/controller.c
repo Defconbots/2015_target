@@ -2,7 +2,6 @@
 #include "controller.h"
 #include "controller_hw.h"
 #include "sci.h"
-#include "engine.h"
 #include "schedule.h"
 #include "delay.h"
 #include <string.h>
@@ -13,7 +12,9 @@
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 static void    RfService(void);
 static void    AdcInit(void);
-static void    GpioInit(void);
+static void    PwmInit(void);
+static void    PwmEnable(void);
+static void    PwmDisable(void);
 static void    UartInit(void);
 static void    RfWrite(uint8_t* buf);
 static uint8_t RfRead(uint8_t* buf, uint8_t len);
@@ -25,6 +26,7 @@ static void    VoltageRead(uint8_t data[2]);
 static void    SpeedRead(uint8_t data[2]);
 static void    SpeedWrite(uint8_t data[2]);
 
+// Uart stuff
 #define BUF_SIZE            128
 
 #define RF_UART             LPC_USART0
@@ -42,9 +44,11 @@ static  uint8_t             target_rx_buf[BUF_SIZE];
 #define UART_CONF_8N1       (UART_CFG_DATALEN_8 | UART_CFG_PARITY_NONE | UART_CFG_STOPLEN_1)
 #define UART_BAUD_RATE      115200
 
+// Clock config
 const uint32_t OscRateIn = 12000000;
 const uint32_t ExtRateIn = 0;
 
+// Commad routers
 typedef struct
 {
     uint8_t type;
@@ -52,13 +56,18 @@ typedef struct
     void (*HandlerFn)(uint8_t*);
 } CommandRoute;
 
+// Pwm settings
+#define PWM_RATE            40000
+#define PWN_INDEX           1
+#define SPEED_SIG_REPEAT    10
+
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Entry
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 inline void Run(void)
 {
     ScheduleInit();
-    GpioInit();
+    PwmInit();
     UartInit();
     AdcInit();
     for(;;)
@@ -115,9 +124,26 @@ void RfService(void)
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Init
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-void GpioInit(void)
+void PwmInit(void)
 {
-    // TODO: init adc hardware
+    Chip_Clock_EnablePeriphClock(SYSCTL_CLOCK_SWM);
+    Chip_SWM_MovablePinAssign(SWM_SCT_OUT0_O, pin_ir);
+    Chip_Clock_DisablePeriphClock(SYSCTL_CLOCK_SWM);
+
+    Chip_SCTPWM_Init(LPC_SCT);
+    Chip_SCTPWM_SetRate(LPC_SCT, PWM_RATE);
+    Chip_SCTPWM_SetOutPin(LPC_SCT, PWN_INDEX, 0);
+    Chip_SCTPWM_SetDutyCycle(LPC_SCT, PWN_INDEX, Chip_SCTPWM_GetTicksPerCycle(LPC_SCT)/2);
+}
+
+void PwmEnable(void)
+{
+    Chip_SCTPWM_Start(LPC_SCT);
+}
+
+void PwmDisable(void)
+{
+    Chip_SCTPWM_Stop(LPC_SCT);
 }
 
 void AdcInit(void)
@@ -125,15 +151,13 @@ void AdcInit(void)
     Chip_ADC_Init(LPC_ADC, 0);
     Chip_ADC_StartCalibration(LPC_ADC);
     while (!(Chip_ADC_IsCalibrationDone(LPC_ADC)));
-    Chip_ADC_SetClockRate(LPC_ADC, 1000);
+    Chip_ADC_SetClockRate(LPC_ADC, ADC_MAX_SAMPLE_RATE);
     Chip_ADC_SetupSequencer(LPC_ADC, ADC_SEQA_IDX, ADC_SEQ_CTRL_CHANSEL(3));
     Chip_Clock_EnablePeriphClock(SYSCTL_CLOCK_SWM);
     Chip_SWM_EnableFixedPin(SWM_FIXED_ADC3);
     Chip_Clock_DisablePeriphClock(SYSCTL_CLOCK_SWM);
 
     Chip_ADC_ClearFlags(LPC_ADC, Chip_ADC_GetFlags(LPC_ADC));
-    //Chip_ADC_EnableInt(LPC_ADC, ADC_INTEN_SEQA_ENABLE);
-    //NVIC_EnableIRQ(ADC_SEQA_IRQn);
     Chip_ADC_EnableSequencer(LPC_ADC, ADC_SEQA_IDX);
 }
 
@@ -233,14 +257,20 @@ void TargetHandoff(uint8_t* buf)
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+// Command Handlers
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void VoltageRead(uint8_t data[2])
 {
     Chip_ADC_StartSequencer(LPC_ADC, ADC_SEQA_IDX);
-    DelayDumb(1000);
-    uint16_t sample = (uint16_t)Chip_ADC_GetDataReg(LPC_ADC,3);
+    //DelayDumb(1000);
+    uint32_t sample = 0;
+    do
+    {
+        sample = Chip_ADC_GetDataReg(LPC_ADC,3);
+    } while (!(sample & ADC_SEQ_GDAT_DATAVALID));
     sample = ADC_DR_RESULT(sample);
-    sample = ((30 * sample) / 0xFFF); // from 12bit sample of 0-3.0V to 100mV range
-    sample *= 2; // voltage divider is V/2
+    // 12bit 0-3V DC convert to 100mV scale, with V/2 divider
+    sample = (sample * 60) / 0xFFF;
     uint8_t reading[2] = {0};
     reading[0] = (sample / 10) + '0';
     reading[1] = (sample % 10) + '0';
@@ -249,20 +279,33 @@ void VoltageRead(uint8_t data[2])
     RfWrite(&buf[0]);
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+static uint8_t _speed[2] = {'S','T'};
+
 void SpeedRead(uint8_t data[2])
 {
-    EngineSpeed es = EngineGetSpeed();
     uint8_t buf[BUF_SIZE] = {0};
-    SciReadResponseCreate(&buf[0],(uint8_t*)es.speed);
+    SciReadResponseCreate(&buf[0],&_speed[0]);
     RfWrite(&buf[0]);
 }
 
 void SpeedWrite(uint8_t data[2])
 {
-    EngineSpeed es = {{0}};
-    memcpy(&es,&data,2);
-    EngineSetSpeed(es);
     uint8_t buf[BUF_SIZE] = {0};
+    memcpy(&_speed[0],&data[0],2);
+
+    const uint16_t speed_r1[] = {275,281,283,284,287,288,291,292,293};
+    const uint16_t speed_st[] = {275,281,283,286,287,288,291,294,297};
+    const uint16_t speed_f1[] = {275,281,283,286,287,290,291,292,293};
+    const uint16_t speed_f2[] = {275,281,283,284,287,290,291,294,297};
+    const uint16_t* speed_sel = (memcmp(_speed,SPEED_SLOW_ASTERN,2) == 0) ? speed_r1 :
+                                (memcmp(_speed,SPEED_HALF_AHEAD,2)  == 0) ? speed_f1 :
+                                (memcmp(_speed,SPEED_FULL_AHEAD,2)  == 0) ? speed_f2 : speed_st;
+
+    for (uint8_t i = 0;i < 9;i++)
+    {
+        ScheduleSingleEvent((i % 2 == 0) ? PwmDisable : PwmEnable, speed_sel[i]);
+    }
     SciWriteResponseCreate(&buf[0],MY_ADDRESS);
     RfWrite(&buf[0]);
 }
