@@ -40,7 +40,7 @@ static uint8_t get_map_size(void);
 extern void ScheduleInit(void)
 {
     SystemCoreClockUpdate();
-    SysTick_Config(SystemCoreClock/100);
+    SysTick_Config(SystemCoreClock/1000);
 }
 
 // Hook the systick handler into the scheduler
