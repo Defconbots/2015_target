@@ -10,56 +10,65 @@
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Local
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-static void    RfService(void);
-static void    AdcInit(void);
-static void    PwmInit(void);
-static void    PwmEnable(void);
-static void    PwmDisable(void);
-static void    UartInit(void);
-static void    RfWrite(uint8_t* buf);
-static uint8_t RfRead(uint8_t* buf, uint8_t len);
-static uint8_t RfDataAvailable(void);
-static void    TargetWrite(uint8_t* buf);
-static uint8_t TargetRead(uint8_t* buf, uint8_t len);
-static void    TargetHandoff(uint8_t* buf);
-static void    VoltageRead(uint8_t data[2]);
-static void    SpeedRead(uint8_t data[2]);
-static void    SpeedWrite(uint8_t data[2]);
-
 // Uart stuff
-#define BUF_SIZE            128
+#define BUF_SIZE            16
 
-#define RF_UART             LPC_USART0
-#define RF_UART_IRQ         UART0_IRQn
-#define RF_UART_HANDLER     UART0_IRQHandler
+#define RF_UART             LPC_USART1
+#define RF_UART_IRQ         UART1_IRQn
+#define RF_UART_HANDLER     UART1_IRQHandler
+#define RF_TX_PORT          SWM_U1_TXD_O
+#define RF_RX_PORT          SWM_U1_RXD_I
 STATIC  RINGBUFF_T          rf_rx_ring;
 static  uint8_t             rf_rx_buf[BUF_SIZE];
 
-#define TARGET_UART         LPC_USART1
-#define TARGET_UART_IRQ     UART1_IRQn
-#define TARGET_UART_HANDLER UART1_IRQHandler
+#define TARGET_UART         LPC_USART0
+#define TARGET_UART_IRQ     UART0_IRQn
+#define TARGET_UART_HANDLER UART0_IRQHandler
+#define TARGET_TX_PORT      SWM_U0_TXD_O
+#define TARGET_RX_PORT      SWM_U0_RXD_I
 STATIC  RINGBUFF_T          target_rx_ring;
 static  uint8_t             target_rx_buf[BUF_SIZE];
 
 #define UART_CONF_8N1       (UART_CFG_DATALEN_8 | UART_CFG_PARITY_NONE | UART_CFG_STOPLEN_1)
-#define UART_BAUD_RATE      115200
+#define UART_BAUD_RATE      57600
 
 // Clock config
 const uint32_t OscRateIn = 12000000;
 const uint32_t ExtRateIn = 0;
 
-// Commad routers
+typedef void (*HandlerFn)(uint8_t*);
 typedef struct
 {
     uint8_t type;
     uint8_t device;
-    void (*HandlerFn)(uint8_t*);
+    HandlerFn handler;
 } CommandRoute;
 
-// Pwm settings
+// Pwm settings (train IR)
 #define PWM_RATE            40000
 #define PWN_INDEX           1
 #define SPEED_SIG_REPEAT    10
+
+static void      RfService(void);
+static void      TargetService(void);
+static HandlerFn HandlerSearch(SciCommand command, CommandRoute* routes, uint8_t len);
+static void      AdcInit(void);
+static void      AdcEnable(void);
+static void      AdcDisable(void);
+static void      PwmInit(void);
+static void      PwmEnable(void);
+static void      PwmDisable(void);
+static void      UartInit(void);
+static void      RfWrite(uint8_t* buf);
+static uint8_t   RfRead(uint8_t* buf, uint8_t len);
+static uint8_t   RfDataAvailable(void);
+static void      TargetWrite(uint8_t* buf);
+static uint8_t   TargetRead(uint8_t* buf, uint8_t len);
+static uint8_t   TargetDataAvailable(void);
+static void      TargetHandoff(uint8_t* buf);
+static void      VoltageRead(uint8_t data[2]);
+static void      SpeedRead(uint8_t data[2]);
+static void      SpeedWrite(uint8_t data[2]);
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Entry
@@ -70,11 +79,34 @@ inline void Run(void)
     PwmInit();
     UartInit();
     AdcInit();
+
+#ifdef CONTROLLER_TEST_SERIAL
+    RfWrite("Train link up\n");
+    TargetWrite("Target link up\n");
+    while(1)
+    {
+        if (TargetDataAvailable())
+        {
+            uint8_t buf[BUF_SIZE] = {0};
+            TargetRead(&buf[0],BUF_SIZE);
+            RfWrite(&buf[0]);
+        }
+        if (RfDataAvailable())
+        {
+            uint8_t buf[BUF_SIZE] = {0};
+            RfRead(&buf[0],BUF_SIZE);
+            TargetWrite(&buf[0]);
+        }
+    }
+#endif
+
     for(;;)
     {
         RfService();
+        TargetService();
     }
 }
+
 
 void RfService(void)
 {
@@ -84,6 +116,7 @@ void RfService(void)
         {COMMAND_TYPE_READ,  DEVICE_SPEED,   SpeedRead},
         {COMMAND_TYPE_WRITE, DEVICE_SPEED,   SpeedWrite}
     };
+    uint8_t route_len = sizeof(routes) / sizeof(CommandRoute);
 
     if (RfDataAvailable())
     {
@@ -102,14 +135,10 @@ void RfService(void)
         {
             if (command.address == MY_ADDRESS)
             {
-                for (int i = 0;i < (sizeof(routes)/sizeof(CommandRoute));i++)
+                HandlerFn fn = HandlerSearch(command,&routes[0],route_len);
+                if (fn != NULL)
                 {
-                    if (command.type   == routes[i].type &&
-                        command.device == routes[i].device)
-                    {
-                        routes[i].HandlerFn(command.data);
-                        break;
-                    }
+                    fn(command.data);
                 }
             }
             // for the targets
@@ -119,6 +148,31 @@ void RfService(void)
             }
         }
     }
+}
+
+void TargetService(void)
+{
+    if (TargetDataAvailable())
+    {
+        // Wait a little for the whole packet to arrive
+        Delay(3);
+        uint8_t buf[BUF_SIZE] = {0};
+        TargetRead(&buf[0],BUF_SIZE);
+        RfWrite(&buf[0]);
+    }
+}
+
+HandlerFn HandlerSearch(SciCommand command, CommandRoute* routes, uint8_t len)
+{
+    for (uint8_t i = 0;i < len;i++)
+    {
+        if (command.type   == routes[i].type &&
+            command.device == routes[i].device)
+        {
+            return routes[i].handler;
+        }
+    }
+    return NULL;
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -153,33 +207,40 @@ void AdcInit(void)
     while (!(Chip_ADC_IsCalibrationDone(LPC_ADC)));
     Chip_ADC_SetClockRate(LPC_ADC, ADC_MAX_SAMPLE_RATE);
     Chip_ADC_SetupSequencer(LPC_ADC, ADC_SEQA_IDX, ADC_SEQ_CTRL_CHANSEL(3));
-    Chip_Clock_EnablePeriphClock(SYSCTL_CLOCK_SWM);
-    Chip_SWM_EnableFixedPin(SWM_FIXED_ADC3);
-    Chip_Clock_DisablePeriphClock(SYSCTL_CLOCK_SWM);
-
     Chip_ADC_ClearFlags(LPC_ADC, Chip_ADC_GetFlags(LPC_ADC));
     Chip_ADC_EnableSequencer(LPC_ADC, ADC_SEQA_IDX);
 }
 
+void AdcEnable(void)
+{
+    Chip_SWM_Init();
+    Chip_SWM_EnableFixedPin(SWM_FIXED_ADC3);
+    Chip_SWM_Deinit();
+}
+
+void AdcDisable(void)
+{
+    Chip_SWM_Init();
+    Chip_SWM_DisableFixedPin(SWM_FIXED_ADC3);
+    Chip_SWM_Deinit();
+}
+
 void UartInit(void)
 {
-    // Enable switch matrix clock
     Chip_SWM_Init();
     // Disable fixed functions for the tx/rx pins
-    Chip_SWM_DisableFixedPin(SWM_FIXED_ADC9);  // TX
-    Chip_SWM_DisableFixedPin(SWM_FIXED_ADC10); // RX
     Chip_SWM_DisableFixedPin(SWM_FIXED_I2C0_SCL); // RF_TX
     Chip_SWM_DisableFixedPin(SWM_FIXED_I2C0_SDA); // RF_RX
+    Chip_SWM_DisableFixedPin(SWM_FIXED_ADC9);  // TX
+    Chip_SWM_DisableFixedPin(SWM_FIXED_ADC10); // RX
 
-    // Uart div clock by 1
     Chip_Clock_SetUARTClockDiv(1);
     Chip_Clock_SetUSARTNBaseClockRate((UART_BAUD_RATE * 16), true);
 
-    // Assign pin locations for tx/rx/rf_tx/rf_rx
-    Chip_SWM_MovablePinAssign(SWM_U1_TXD_O, pin_tx); // TX
-    Chip_SWM_MovablePinAssign(SWM_U1_RXD_I, pin_rx); // RX
-    Chip_SWM_MovablePinAssign(SWM_U0_TXD_O, pin_rf_tx); // RF_TX
-    Chip_SWM_MovablePinAssign(SWM_U0_RXD_I, pin_rf_rx); // RF_RX
+    Chip_SWM_MovablePinAssign(RF_TX_PORT, pin_rf_tx);
+    Chip_SWM_MovablePinAssign(RF_RX_PORT, pin_rf_rx);
+    Chip_SWM_MovablePinAssign(TARGET_TX_PORT, pin_tx);
+    Chip_SWM_MovablePinAssign(TARGET_RX_PORT, pin_rx);
 
     // Disable switch matrix clock (saves power)
     Chip_SWM_Deinit();
@@ -190,22 +251,19 @@ void UartInit(void)
     Chip_UART_SetBaud(RF_UART,UART_BAUD_RATE);
     Chip_UART_Enable(RF_UART);
     Chip_UART_TXEnable(RF_UART);
+    RingBuffer_Init(&rf_rx_ring,rf_rx_buf,1,BUF_SIZE);
+    Chip_UART_IntEnable(RF_UART,UART_INTEN_RXRDY);
+    NVIC_EnableIRQ(RF_UART_IRQ);
 
     Chip_UART_Init(TARGET_UART);
     Chip_UART_ConfigData(TARGET_UART,UART_CONF_8N1);
     Chip_UART_SetBaud(TARGET_UART,UART_BAUD_RATE);
     Chip_UART_Enable(TARGET_UART);
     Chip_UART_TXEnable(TARGET_UART);
-
-    // Init ring buffers
-    RingBuffer_Init(&rf_rx_ring,rf_rx_buf,1,BUF_SIZE);
     RingBuffer_Init(&target_rx_ring,target_rx_buf,1,BUF_SIZE);
-
-    // Enable interrupts
-    Chip_UART_IntEnable(RF_UART,UART_INTEN_RXRDY);
-    NVIC_EnableIRQ(RF_UART_IRQ);
     Chip_UART_IntEnable(TARGET_UART,UART_INTEN_RXRDY);
     NVIC_EnableIRQ(TARGET_UART_IRQ);
+
 }
 
 // Hook into Uart interrupts and redirect them to ring buffers
@@ -247,6 +305,11 @@ uint8_t TargetRead(uint8_t* buf, uint8_t len)
     return Chip_UART_ReadRB(TARGET_UART,&target_rx_ring,&buf[0],len);
 }
 
+uint8_t TargetDataAvailable(void)
+{
+    return (uint8_t)RingBuffer_GetCount(&target_rx_ring);
+}
+
 void TargetHandoff(uint8_t* buf)
 {
     TargetWrite(&buf[0]);
@@ -261,13 +324,15 @@ void TargetHandoff(uint8_t* buf)
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void VoltageRead(uint8_t data[2])
 {
+    AdcEnable();
+    Delay(5);
     Chip_ADC_StartSequencer(LPC_ADC, ADC_SEQA_IDX);
-    //DelayDumb(1000);
     uint32_t sample = 0;
     do
     {
         sample = Chip_ADC_GetDataReg(LPC_ADC,3);
     } while (!(sample & ADC_SEQ_GDAT_DATAVALID));
+    AdcDisable();
     sample = ADC_DR_RESULT(sample);
     // 12bit 0-3V DC convert to 100mV scale, with V/2 divider
     sample = (sample * 60) / 0xFFF;

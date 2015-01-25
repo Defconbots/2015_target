@@ -5,7 +5,10 @@
 #include "chip.h"
 #include <stdio.h>
 
-#define CONTROLLER
+//#define CONTROLLER_TEST_SERIAL
+//#define TARGET_TEST_SERIAL
+
+//#define CONTROLLER
 #if !defined(CONTROLLER)
 #define TARGET
 #endif

@@ -11,7 +11,7 @@
 #define DEVICE_SPEED         'S'
 #define DEVICE_RED_LED       'R'
 #define DEVICE_BLUE_LED      'B'
-#define DEVICE_HIT_ID        'H'
+#define DEVICE_HIT_ID        'I'
 
 // Addresses
 #define ADDRESS_ALL          '*'
