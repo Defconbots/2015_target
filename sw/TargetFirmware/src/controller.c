@@ -81,7 +81,7 @@ inline void Run(void)
     AdcInit();
 
 #ifdef CONTROLLER_TEST_SERIAL
-    RfWrite("Train link up\n");
+    RfWrite("RF link up\n");
     TargetWrite("Target link up\n");
     while(1)
     {
@@ -209,20 +209,19 @@ void AdcInit(void)
     Chip_ADC_SetupSequencer(LPC_ADC, ADC_SEQA_IDX, ADC_SEQ_CTRL_CHANSEL(3));
     Chip_ADC_ClearFlags(LPC_ADC, Chip_ADC_GetFlags(LPC_ADC));
     Chip_ADC_EnableSequencer(LPC_ADC, ADC_SEQA_IDX);
-}
-
-void AdcEnable(void)
-{
     Chip_SWM_Init();
     Chip_SWM_EnableFixedPin(SWM_FIXED_ADC3);
     Chip_SWM_Deinit();
 }
 
+void AdcEnable(void)
+{
+    Chip_ADC_StartSequencer(LPC_ADC, ADC_SEQA_IDX);
+}
+
 void AdcDisable(void)
 {
-    Chip_SWM_Init();
-    Chip_SWM_DisableFixedPin(SWM_FIXED_ADC3);
-    Chip_SWM_Deinit();
+    Chip_ADC_DisableSequencer(LPC_ADC,ADC_SEQ_CTRL_CHANSEL(3));
 }
 
 void UartInit(void)
@@ -326,7 +325,6 @@ void VoltageRead(uint8_t data[2])
 {
     AdcEnable();
     Delay(5);
-    Chip_ADC_StartSequencer(LPC_ADC, ADC_SEQA_IDX);
     uint32_t sample = 0;
     do
     {
