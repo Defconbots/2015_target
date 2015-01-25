@@ -77,12 +77,12 @@ static uint32_t Chip_Clock_GetWDTLFORate(uint32_t reg)
 	return wdtOSCRate[clk] / ((div + 1) << 1);
 }
 
-/* Compute a PLL frequency */
+/* Compute PLL frequency */
 static uint32_t Chip_Clock_GetPLLFreq(uint32_t PLLReg, uint32_t inputRate)
 {
-	uint32_t msel = ((PLLReg & 0x1F) + 1);
+	uint32_t m_val = ((PLLReg & 0x1F) + 1);
 
-	return inputRate * msel;
+	return (inputRate * m_val);
 }
 
 /*****************************************************************************
@@ -277,4 +277,17 @@ uint32_t Chip_Clock_SetUSARTNBaseClockRate(uint32_t rate, bool fEnable)
 	return Chip_Clock_GetUSARTNBaseClockRate();
 }
 
+/* Get the IOCONCLKDIV clock rate */
+uint32_t Chip_Clock_GetIOCONCLKDIVClockRate(CHIP_PIN_CLKDIV_T reg)
+{
+	uint32_t div = LPC_SYSCTL->IOCONCLKDIV[reg] & ~SYSCTL_IOCONCLKDIV_RESERVED;
+	uint32_t main_clk = Chip_Clock_GetMainClockRate();
+	
+	return (div == 0) ? 0 : (main_clk / div);
+}
 
+void Chip_Clock_SetIOCONCLKDIV(CHIP_PIN_CLKDIV_T reg, uint8_t div)
+{
+	int t_reg = IOCONCLK_MAX-reg;
+	LPC_SYSCTL->IOCONCLKDIV[t_reg] = div;
+}

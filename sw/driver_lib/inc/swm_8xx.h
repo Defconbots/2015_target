@@ -55,7 +55,12 @@ typedef struct {
 	__IO uint32_t PINENABLE0;		/*!< Pin Enable register */
 } LPC_SWM_T;
 
+#if defined(CHIP_LPC82X)
+#define SWM_PINENABLE0_RESERVED  (~0x1ffffff)
+#else
 #define SWM_PINENABLE0_RESERVED  (~0x1ff)
+#endif
+
 /**
  * @brief LPC8XX Switch Matrix Movable pins
  */

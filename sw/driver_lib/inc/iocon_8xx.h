@@ -162,20 +162,6 @@ typedef enum CHIP_PIN_SMODE {
 } CHIP_PIN_SMODE_T;
 
 /**
- * @brief IOCON Perpipheral Clock divider selction for input filter
- * sampling clock
- */
-typedef enum CHIP_PIN_CLKDIV {
-	IOCONCLKDIV0 = 0,	/*!< Clock divider 0 */
-	IOCONCLKDIV1 = 1,	/*!< Clock divider 1 */
-	IOCONCLKDIV2 = 2,	/*!< Clock divider 2 */
-	IOCONCLKDIV3 = 3,	/*!< Clock divider 3 */
-	IOCONCLKDIV4 = 4,	/*!< Clock divider 4 */
-	IOCONCLKDIV5 = 5,	/*!< Clock divider 5 */
-	IOCONCLKDIV6 = 6	/*!< Clock divider 6 */
-} CHIP_PIN_CLKDIV_T;
-
-/**
  * @brief IOCON I2C Modes enum (Only for I2C pins PIO0_10 and PIO0_11)
  */
 typedef enum CHIP_PIN_I2CMODE {

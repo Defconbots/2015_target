@@ -65,7 +65,7 @@ extern "C" {
 #define I2CM_STATUS_ERROR           0x01		/*!< Unknown error condition. */
 #define I2CM_STATUS_NAK_ADR         0x02		/*!< No acknowledgement received from slave during address phase. */
 #define I2CM_STATUS_BUS_ERROR       0x03		/*!< I2C bus error */
-#define I2CM_STATUS_NAK_DAT           0x04		/*!< No acknowledgement received from slave during address phase. */
+#define I2CM_STATUS_NAK_DAT			0x04		/*!< No acknowledgement received from slave during address phase. */
 #define I2CM_STATUS_ARBLOST         0x05		/*!< Arbitration lost. */
 #define I2CM_STATUS_BUSY            0xFF		/*!< I2C transmistter is busy. */
 
@@ -86,22 +86,6 @@ typedef struct {
 	uint16_t status;				/*!< Status of the current I2C transfer */
 	uint8_t slaveAddr;			/*!< 7-bit I2C Slave address */
 } I2CM_XFER_T;
-
-/**
- * @brief	Sets HIGH and LOW duty cycle registers
- * @param	pI2C	: Pointer to selected I2C peripheral
- * @param	sclH	: Number of I2C_PCLK cycles for the SCL HIGH time value between (2 - 9).
- * @param	sclL	: Number of I2C_PCLK cycles for the SCL LOW time value between (2 - 9).
- * @return	Nothing
- * @note	The I2C clock divider should be set to the appropriate value before calling this function
- *				The I2C baud is determined by the following formula: <br>
- *        I2C_bitFrequency = (I2C_PCLK)/(I2C_CLKDIV * (sclH + sclL)) <br>
- *				where I2C_PCLK is the frequency of the System clock and I2C_CLKDIV is I2C clock divider
- */
-static INLINE void Chip_I2CM_SetDutyCycle(LPC_I2C_T *pI2C, uint16_t sclH, uint16_t sclL)
-{
-	pI2C->MSTTIME = (((sclH - 2) & 0x07) << 4) | ((sclL - 2) & 0x07);
-}
 
 /**
  * @brief	Set up bus speed for LPC_I2C controller
@@ -278,7 +262,7 @@ uint32_t Chip_I2CM_XferHandler(LPC_I2C_T *pI2C, I2CM_XFER_T *xfer);
  * pointed to by @a xfer. The member of @a xfer, @a txBuff and @a txSz be
  * initialized to the memory from which the I2C must pick the data to be
  * transfered to slave and the number of bytes to send respectively, similarly
- * @a rxBuff and @a rxSz must have pointer to memroy where data received
+ * @a rxBuff and @a rxSz must have pointer to memory where data received
  * from slave be stored and the number of data to get from slave respectilvely.
  * Following types of transfers are possible:
  * - Write-only transfer: When @a rxSz member of @a xfer is set to 0.

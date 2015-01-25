@@ -114,6 +114,7 @@ extern "C" {
 #define LPC_MRT             ((LPC_MRT_T         *) LPC_MRT_BASE)
 #define LPC_I2C0            ((LPC_I2C_T         *) LPC_I2C0_BASE)
 
+#ifdef CHIP_LPC82X
 /* Peripherals available only on LPC82x */
 #define LPC_ADC             ((LPC_ADC_T         *) LPC_ADC_BASE)
 #define LPC_I2C1            ((LPC_I2C_T         *) LPC_I2C1_BASE)
@@ -122,6 +123,7 @@ extern "C" {
 #define LPC_DMA             ((LPC_DMA_T         *) LPC_DMA_BASE)
 #define LPC_DMATRIGMUX      ((LPC_DMATRIGMUX_T  *) LPC_DMATIRGMUX_BASE)
 #define LPC_INMUX           ((LPC_INMUX_T       *) LPC_INMUX_BASE)
+#endif
 
 /* Base address Alias list */
 #define LPC_I2C_BASE         LPC_I2C0_BASE
@@ -129,10 +131,17 @@ extern "C" {
 #define LPC_SYSCON           LPC_SYSCTL
 
 /* IRQ Handler alias list */
-#define SCT0_IRQHandler      SCT_IRQHandler
-#define CMP0_IRQHandler      CMP_IRQHandler
-#define WWDT_IRQHandler      WDT_IRQHandler
+#ifdef CHIP_LPC82X
 #define I2C_IRQHandler       I2C0_IRQHandler
+#define PININT0_IRQHandler   PIN_INT0_IRQHandler
+#define PININT1_IRQHandler   PIN_INT1_IRQHandler
+#define PININT2_IRQHandler   PIN_INT2_IRQHandler
+#define PININT3_IRQHandler   PIN_INT3_IRQHandler
+#define PININT4_IRQHandler   PIN_INT4_IRQHandler
+#define PININT5_IRQHandler   PIN_INT5_IRQHandler
+#define PININT6_IRQHandler   PIN_INT6_IRQHandler
+#define PININT7_IRQHandler   PIN_INT7_IRQHandler
+#endif
 
 /**
  * @}

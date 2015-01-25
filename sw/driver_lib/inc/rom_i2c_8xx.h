@@ -76,7 +76,7 @@ typedef struct I2C_RESULT {
  * LPC8xx I2C ROM driver modes enum
  */
 typedef enum CHIP_I2C_MODE {
-	_IDLE,			/*!< IDLE state */
+	IDLE,			/*!< IDLE state */
 	MASTER_SEND,	/*!< Master send state */
 	MASTER_RECEIVE,	/*!< Master Receive state */
 	SLAVE_SEND,		/*!< Slave send state */

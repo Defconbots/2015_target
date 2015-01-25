@@ -83,7 +83,7 @@ typedef enum MRT_MODE {
  * @brief MRT register bit fields & masks
  */
 /* MRT Time interval register bit fields */
-#define MRT_INTVAL_IVALUE        (0x7FFFFFFF)	/* Maximum interval load value and mask */
+#define MRT_INTVAL_IVALUE        (0x7FFFFFFFUL)	/* Maximum interval load value and mask */
 #define MRT_INTVAL_LOAD          (0x80000000UL)	/* Force immediate load of timer interval register bit */
 
 /* MRT Control register bit fields & masks */

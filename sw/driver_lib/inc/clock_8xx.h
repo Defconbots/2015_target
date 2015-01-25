@@ -242,7 +242,7 @@ STATIC INLINE void Chip_SYSCTL_SetUSARTFRGDivider(uint8_t div)
 }
 
 /**
- * @brief	Set The USART Fractional Generator Divider
+ * @brief	Get The USART Fractional Generator Divider
  * @return	Value of USART Fractional Generator Divider
  */
 STATIC INLINE uint32_t Chip_SYSCTL_GetUSARTFRGDivider(void)
@@ -392,6 +392,23 @@ uint32_t Chip_Clock_GetMainClockRate(void);
  * @return	system clock rate
  */
 uint32_t Chip_Clock_GetSystemClockRate(void);
+
+/**
+ * @brief	Get IOCONCLKDIV clock rate
+ * @param	reg	: Divider register to get
+ * @return	The clock rate going to the IOCON glitch filter
+ * @note	Use 0 to disable, or a divider value of 1 to 255.
+ */
+uint32_t Chip_Clock_GetIOCONCLKDIVClockRate(CHIP_PIN_CLKDIV_T reg);
+
+/**
+ * @brief	Set IOCONCLKDIV divider
+ * @param	reg	: divider register to set
+ * @param	div	: divider value for IOCONCLKDIV[reg] clock
+ * @return	Nothing
+ * @note	Use 0 to disable, or a divider value of 1 to 255.
+ */
+void Chip_Clock_SetIOCONCLKDIV(CHIP_PIN_CLKDIV_T reg, uint8_t div);
 
 /**
  * @}

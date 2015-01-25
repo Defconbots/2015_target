@@ -146,6 +146,21 @@ typedef struct {
 	__I  uint32_t DEVICEID;				/*!< Offset: 0x3F8 Device ID (R/ ) */
 } LPC_SYSCTL_T;
 
+/**
+ * @brief IOCON Perpipheral Clock divider selction for input filter
+ * sampling clock
+ */
+typedef enum CHIP_PIN_CLKDIV {
+	IOCONCLKDIV0 = 0,				/*!< Clock divider 0 */
+	IOCONCLKDIV1,					/*!< Clock divider 1 */
+	IOCONCLKDIV2,					/*!< Clock divider 2 */
+	IOCONCLKDIV3,					/*!< Clock divider 3 */
+	IOCONCLKDIV4,					/*!< Clock divider 4 */
+	IOCONCLKDIV5,					/*!< Clock divider 5 */
+	IOCONCLKDIV6,					/*!< Clock divider 6 */
+	IOCONCLK_MAX = IOCONCLKDIV6		/*!< Top value used to reverse the dividers */
+} CHIP_PIN_CLKDIV_T;
+
 /* Reserved bits masks for registers */
 #define SYSCTL_SYSMEMREMAP_RESERVED     (~3)
 #define SYSCTL_SYSPLLCTRL_RESERVED      (~0x7f)

@@ -43,6 +43,36 @@
  * Private functions
  ****************************************************************************/
 
+/**
+ * @brief	Sets HIGH and LOW duty cycle registers
+ * @param	pI2C	: Pointer to selected I2C peripheral
+ * @param	sclH	: Number of I2C_PCLK cycles for the SCL HIGH time value between (2 - 9).
+ * @param	sclL	: Number of I2C_PCLK cycles for the SCL LOW time value between (2 - 9).
+ * @return	Nothing
+ * @note	The I2C clock divider should be set to the appropriate value before calling this function
+ *				The I2C baud is determined by the following formula: <br>
+ *        I2C_bitFrequency = (I2C_PCLK)/(I2C_CLKDIV * (sclH + sclL)) <br>
+ *				where I2C_PCLK is the frequency of the System clock and I2C_CLKDIV is I2C clock divider
+ */
+static void Chip_I2CM_SetDutyCycle(LPC_I2C_T *pI2C, uint16_t sclH, uint16_t sclL)
+{
+	/* Limit to usable range of timing values */
+	if (sclH < 2) {
+		sclH = 2;
+	}
+	else if (sclH > 9) {
+		sclH = 9;
+	}
+	if (sclL < 2) {
+		sclL = 2;
+	}
+	else if (sclL > 9) {
+		sclL = 9;
+	}
+
+	pI2C->MSTTIME = (((sclH - 2) & 0x07) << 4) | ((sclL - 2) & 0x07);
+}
+
 /*****************************************************************************
  * Public functions
  ****************************************************************************/
@@ -50,7 +80,7 @@
 /* Set up bus speed for LPC_I2C interface */
 void Chip_I2CM_SetBusSpeed(LPC_I2C_T *pI2C, uint32_t busSpeed)
 {
-	uint32_t scl = Chip_Clock_GetMainClockRate() / (Chip_I2C_GetClockDiv(pI2C) * busSpeed);
+	uint32_t scl = Chip_Clock_GetSystemClockRate() / (Chip_I2C_GetClockDiv(pI2C) * busSpeed);
 	Chip_I2CM_SetDutyCycle(pI2C, (scl >> 1), (scl - (scl >> 1)));
 }
 

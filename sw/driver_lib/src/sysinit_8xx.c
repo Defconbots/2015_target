@@ -74,7 +74,7 @@ void Chip_SetupXtalClocking(void)
 	cmd[0] = Chip_Clock_GetMainOscRate() / 1000;/* in KHz */
 	cmd[1] = 24000000 / 1000;	/* 24MHz system clock rate */
 	cmd[2] = CPU_FREQ_EQU;
-	cmd[2] = 24000000 / 10000;
+	cmd[3] = 24000000 / 10000;
 	LPC_PWRD_API->set_pll(cmd, resp);
 
 	/* Dead loop on fail */
@@ -85,7 +85,7 @@ void Chip_SetupXtalClocking(void)
 	Chip_SYSCTL_PowerDown(SYSCTL_SLPWAKE_SYSPLL_PD);
 
 	/* Configure the PLL M and P dividers */
-	/* Setup PLL for main oscillator rate (FCLKIN = 12MHz) * 2 = 324Hz
+	/* Setup PLL for main oscillator rate (FCLKIN = 12MHz) * 2 = 24MHz
 	   MSEL = 1 (this is pre-decremented), PSEL = 2 (for P = 4)
 	   FCLKOUT = FCLKIN * (MSEL + 1) = 12MHz * 2 = 24MHz
 	   FCCO = FCLKOUT * 2 * P = 24MHz * 2 * 4 = 192MHz (within FCCO range) */
@@ -138,11 +138,11 @@ void Chip_SetupIrcClocking(void)
 	Chip_SYSCTL_PowerDown(SYSCTL_SLPWAKE_SYSPLL_PD);
 
 	/* Configure the PLL M and P dividers */
-	/* Setup PLL for main oscillator rate (FCLKIN = 12MHz) * 2 = 324Hz
+	/* Setup PLL for main oscillator rate (FCLKIN = 12MHz) * 2 = 24MHz
 	   MSEL = 1 (this is pre-decremented), PSEL = 2 (for P = 4)
-	   FCLKOUT = FCLKIN * (MSEL + 1) = 12MHz * 5 = 60MHz
-	   FCCO = FCLKOUT * 2 * P = 60MHz * 2 * (2 * P) = 240MHz (within FCCO range) */
-	Chip_Clock_SetupSystemPLL(4, 1);
+	   FCLKOUT = FCLKIN * (MSEL + 1) = 12MHz * 2 = 24MHz
+	   FCCO = FCLKOUT * 2 * P = 24MHz * 2 * 4 = 192MHz (within FCCO range) */
+	Chip_Clock_SetupSystemPLL(1, 2);
 
 	/* Turn on the PLL by clearing the power down bit */
 	Chip_SYSCTL_PowerUp(SYSCTL_SLPWAKE_SYSPLL_PD);

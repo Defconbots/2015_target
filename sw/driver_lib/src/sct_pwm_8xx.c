@@ -51,8 +51,8 @@
 void Chip_SCTPWM_SetOutPin(LPC_SCT_T *pSCT, uint8_t index, uint8_t pin)
 {
 	int ix = (int) index;
-	pSCT->EVENT[ix].CTRL = index | (1 << 12);
-	pSCT->EVENT[ix].STATE = 1;
+	pSCT->EV[ix].CTRL = index | (1 << 12);
+	pSCT->EV[ix].STATE = 1;
 	pSCT->OUT[pin].SET = 1;
 	pSCT->OUT[pin].CLR = 1 << ix;
 
@@ -74,11 +74,11 @@ void Chip_SCTPWM_SetRate(LPC_SCT_T *pSCT, uint32_t freq)
 	Chip_SCTPWM_Stop(pSCT);
 
 	/* Set MATCH0 for max limit */
-	pSCT->REGMODE = 0;
+	pSCT->REGMODE_U = 0;
 	Chip_SCT_SetMatchCount(pSCT, SCT_MATCH_0, 0);
 	Chip_SCT_SetMatchReload(pSCT, SCT_MATCH_0, rate);
-	pSCT->EVENT[0].CTRL = 1 << 12;
-	pSCT->EVENT[0].STATE = 1;
+	pSCT->EV[0].CTRL = 1 << 12;
+	pSCT->EV[0].STATE = 1;
 
 	/* Set SCT Counter to count 32-bits and reset to 0 after reaching MATCH0 */
 	Chip_SCT_Config(pSCT, SCT_CONFIG_32BIT_COUNTER | SCT_CONFIG_AUTOLIMIT_L);
