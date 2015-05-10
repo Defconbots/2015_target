@@ -8,7 +8,7 @@ This document will describe the interfaces used to communicate with the 2015 tar
 
 The 2015 target system has three main components: The command PC, the central train controller and the targets. To communicate with the train controller we use a virtual serial port hosted over a 2.4ghz zigbee radio. Internal to the train the train controller uses a secondary serial protocol to command/query individual targets. Both serial interfaces use a 115200 baud 8N1 RS232 protocol.
 
-External to the targets are contestants with their serial-laser interface. Contestants will use 5mW green laser pointers with 9600 baud 8N1 RS232 data encoded in the laser.
+External to the targets are contestants with their serial-laser interface. Contestants will use 50mW green laser pointers with 4800 baud 8N1 RS232 data encoded in the laser.
 
                                                >Target-1<
                                                >Target-2<
