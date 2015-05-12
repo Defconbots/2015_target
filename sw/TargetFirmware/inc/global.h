@@ -20,7 +20,7 @@
 
 #if defined(TARGET)
 #include "target.h"
-#define MY_ADDRESS '1'
+#define MY_ADDRESS '3'
 #endif
 
 #define SUCCESS 0

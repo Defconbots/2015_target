@@ -210,26 +210,26 @@ void UartInit(void)
 {
     // Enable switch matrix clock
     Chip_SWM_Init();
-    // Disable fixed functions for the tx/rx pins
-    Chip_SWM_DisableFixedPin(SWM_FIXED_ADC10); // Train TX
-    Chip_SWM_DisableFixedPin(SWM_FIXED_ADC9);  // Train RX
+    Chip_IOCON_Init();
 
     Chip_Clock_SetUARTClockDiv(1);
     Chip_Clock_SetUSARTNBaseClockRate((TRAIN_UART_BAUD * 16), true);
 
+    // Disable RX pullup
+    Chip_IOCON_PinSetMode(LPC_IOCON,IOCON_PIO13,PIN_MODE_INACTIVE);
     Chip_SWM_MovablePinAssign(SWM_U0_TXD_O, pin_tx); // Train TX
     Chip_SWM_MovablePinAssign(SWM_U0_RXD_I, pin_rx); // Train RX
     Chip_SWM_MovablePinAssign(SWM_U1_RXD_I, pin_laser_rx); // LASER_RX
 
     // Disable switch matrix clock (saves power)
     Chip_SWM_Deinit();
+    Chip_IOCON_Deinit();
 
     // Init the Uart hardware
     Chip_UART_Init(TRAIN_UART);
     Chip_UART_ConfigData(TRAIN_UART,UART_CONF_8N1);
     Chip_UART_SetBaud(TRAIN_UART,TRAIN_UART_BAUD);
     Chip_UART_Enable(TRAIN_UART);
-    Chip_UART_TXEnable(TRAIN_UART); // TODO: can't leave this on
     RingBuffer_Init(&train_rx_ring,train_rx_buf,1,BUF_SIZE);
     Chip_UART_IntEnable(TRAIN_UART,UART_INTEN_RXRDY);
     NVIC_EnableIRQ(TRAIN_UART_IRQ);
@@ -259,12 +259,12 @@ void LASER_UART_HANDLER(void)
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void TrainWrite(uint8_t* buf)
 {
-    //Chip_UART_TXEnable(TRAIN_UART);
-    //Delay(3);
+    Chip_UART_TXEnable(TRAIN_UART);
+    Delay(1);
     Chip_UART_SendBlocking(TRAIN_UART,&buf[0],strlen((char*)buf));
-    //Delay(1);
+    Delay(1);
     // All targets share a bus so we can't leave tx enabled
-    //Chip_UART_TXDisable(TRAIN_UART);
+    Chip_UART_TXDisable(TRAIN_UART);
 }
 
 uint8_t TrainRead(uint8_t* buf, uint8_t len)

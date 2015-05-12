@@ -170,6 +170,10 @@ typedef enum CHIP_PIN_I2CMODE {
 	PIN_I2CMODE_FASTPLUS = 2	/*!< I2C Fast plus mode */
 } CHIP_PIN_I2CMODE_T;
 
+void Chip_IOCON_Init(void);
+
+void Chip_IOCON_Deinit(void);
+
 /**
  * @brief	Sets I/O Control pin mux
  * @param	pIOCON		: The base of IOCON peripheral on the chip

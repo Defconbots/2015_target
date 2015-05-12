@@ -48,7 +48,7 @@
  ****************************************************************************/
 
 /* GPIO initilisation function */
-void Chip_GPIO_Init(LPC_GPIO_T *pGPIO)
+void Chip_GPIO_Init(void)
 {
 	Chip_Clock_EnablePeriphClock(SYSCTL_CLOCK_GPIO);
 }

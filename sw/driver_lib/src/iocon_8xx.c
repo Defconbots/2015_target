@@ -47,6 +47,17 @@
  * Public functions
  ****************************************************************************/
 
+void Chip_IOCON_Init(void)
+{
+    Chip_Clock_EnablePeriphClock(SYSCTL_CLOCK_IOCON);
+}
+
+void Chip_IOCON_Deinit(void)
+{
+    Chip_Clock_DisablePeriphClock(SYSCTL_CLOCK_IOCON);
+}
+
+
 /* Set the pin mode (pull-up/pull-down). */
 void Chip_IOCON_PinSetMode(LPC_IOCON_T *pIOCON, CHIP_PINx_T pin, CHIP_PIN_MODE_T mode)
 {

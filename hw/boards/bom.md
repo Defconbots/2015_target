@@ -31,7 +31,7 @@
 |U2              |1       |771-LPC824M201JDH20J|Mouser     |
 |JP1, JP2        |2       |798-DF134P125V20    |Mouser     |
 |C1, C2          |2       |C1608X5R1C106M080AB |Mouser     |
-|JP3             |1       |FTSH-105-01-L       |Samtec     |
+|JP3             |1       |M50-3600542         |Mouser     |
 
 ## Control/Target Interconnects
 

@@ -64,7 +64,7 @@ typedef struct {				/*!< GPIO_PORT Structure */
  * @param	pGPIO	: The base of GPIO peripheral on the chip
  * @return	Nothing
  */
-void Chip_GPIO_Init(LPC_GPIO_T *pGPIO);
+void Chip_GPIO_Init(void);
 
 /**
  * @brief	De-Initialize GPIO block
