@@ -215,9 +215,10 @@ void UartInit(void)
     Chip_Clock_SetUARTClockDiv(1);
     Chip_Clock_SetUSARTNBaseClockRate((TRAIN_UART_BAUD * 16), true);
 
-    // Disable RX pullup
+    // TX is on a bus so we redirect it to a spare IO (PIO0_10) when not in use
+    // Float the tx pin
     Chip_IOCON_PinSetMode(LPC_IOCON,IOCON_PIO13,PIN_MODE_INACTIVE);
-    Chip_SWM_MovablePinAssign(SWM_U0_TXD_O, pin_tx); // Train TX
+    Chip_SWM_MovablePinAssign(SWM_U0_TXD_O, pin_tx_idle); // Train TX
     Chip_SWM_MovablePinAssign(SWM_U0_RXD_I, pin_rx); // Train RX
     Chip_SWM_MovablePinAssign(SWM_U1_RXD_I, pin_laser_rx); // LASER_RX
 
@@ -259,10 +260,14 @@ void LASER_UART_HANDLER(void)
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void TrainWrite(uint8_t* buf)
 {
+    Chip_SWM_Init();
+    Chip_SWM_MovablePinAssign(SWM_U0_TXD_O, pin_tx); // Train TX
     Chip_UART_TXEnable(TRAIN_UART);
     Delay(1);
     Chip_UART_SendBlocking(TRAIN_UART,&buf[0],strlen((char*)buf));
     Delay(1);
+    Chip_SWM_MovablePinAssign(SWM_U0_TXD_O, pin_tx_idle); // Train TX
+    Chip_SWM_Deinit();
     // All targets share a bus so we can't leave tx enabled
     Chip_UART_TXDisable(TRAIN_UART);
 }
