@@ -38,8 +38,8 @@ typedef struct
 } SciCommand;
 
 SciCommand SciParse(uint8_t* buf);
-void SciReadResponseCreate(uint8_t* buf, uint8_t data[2]);
-void SciWriteResponseCreate(uint8_t* buf, uint8_t data);
+void SciReadResponseCreate(uint8_t* buf, uint8_t address, uint8_t data[2]);
+void SciWriteResponseCreate(uint8_t* buf, uint8_t address);
 void SciErrorResponseCreate(uint8_t* buf, uint8_t data);
 
 #endif

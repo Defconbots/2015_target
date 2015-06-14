@@ -55,9 +55,11 @@ Each command will generate one of three possible responses: A read response, a w
 |Offset|Component|
 |:----:|:-------:|
 |  0   |'('      |
-|  1   |DATA_H   |
-|  2   |DATA_L   |
-|  3   |')'      |
+|  1   |ADDRESS  |
+|  2   |DEVICE   |
+|  3   |DATA_H   |
+|  4   |DATA_L   |
+|  5   |')'      |
 
 ### Write
 
@@ -76,7 +78,8 @@ Each command will generate one of three possible responses: A read response, a w
 |:----:|:-------:|
 |  0   |'<'      |
 |  1   |ADDRESS  |
-|  2   |'>'      |
+|  2   |DEVICE   |
+|  3   |'>'      |
 
 ### Error
 
@@ -155,37 +158,37 @@ Targets can detect hits from the ID encoded in contestant's laser. When a contes
 
 #### Read Train Battery Voltage + Response
 
-    {0V}(41)
+    {0V}(0V41)
 
 Battery voltage reported as 4.1VDC.
 
 #### Read/Write Train Speed + Response
 
-    {0S}(F1)
+    {0S}(0SF1)
 
 Train speed reported to be half-ahead.
 
-    [0SST]<0>
+    [0SST]<0S>
 
 Train speed set to stop.
 
 #### Read/Write Red LED + Response
 
-    {1R}(01)
+    {1R}(1R01)
 
 Target #1 Red LED status reported to be enabled.
 
-    [1R00]<1>
+    [1R00]<1R>
 
 Target #1 Red LED set to disabled.
 
 #### Read/Write Hit ID + Response
 
-    {5I}(08)
+    {5I}(5I08)
 
 Target #5 hit ID reported to be 08.
 
-    [5I00]<5>
+    [5I00]<5I>
 
 Target #5 hit ID reset to 0.
 

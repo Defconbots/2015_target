@@ -28,6 +28,8 @@ typedef struct
 typedef struct
 {
     uint8_t start;
+    uint8_t address;
+    uint8_t device;
     uint8_t data[2];
     uint8_t stop;
 } ReadResponse;
@@ -50,6 +52,7 @@ typedef struct
 {
     uint8_t start;
     uint8_t address;
+    uint8_t device;
     uint8_t stop;
 } WriteResponse;
 
@@ -89,13 +92,13 @@ SciCommand SciParse(uint8_t* buf)
     {
         ret.error = ERROR_MALFORMED;
     }
-    else if (!address_valid)
-    {
-        ret.error = ERROR_ADDRESS;
-    }
     else if (!device_valid)
     {
         ret.error = ERROR_DEVICE;
+    }
+    else if (!address_valid)
+    {
+        ret.error = ERROR_ADDRESS;
     }
     else if (start_byte == READ_COMMAND_START)
     {
@@ -184,19 +187,22 @@ uint8_t SciDeviceVerify(uint8_t* buf)
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Response handling
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-void SciReadResponseCreate(uint8_t* buf, uint8_t data[2])
+void SciReadResponseCreate(uint8_t* buf, uint8_t device, uint8_t data[2])
 {
     ReadResponse* response = (ReadResponse*)buf;
     response->start = READ_RESPONSE_START;
+    response->address = MY_ADDRESS;
+    response->device = device;
     memcpy(response->data,data,sizeof(response->data));
     response->stop = READ_RESPONSE_STOP;
 }
 
-void SciWriteResponseCreate(uint8_t* buf, uint8_t data)
+void SciWriteResponseCreate(uint8_t* buf, uint8_t device)
 {
     WriteResponse* response = (WriteResponse*)buf;
     response->start = WRITE_RESPONSE_START;
-    response->address = data;
+    response->address = MY_ADDRESS;
+    response->device = device;
     response->stop = WRITE_RESPONSE_STOP;
 }
 

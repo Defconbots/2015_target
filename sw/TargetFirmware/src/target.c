@@ -47,7 +47,8 @@ typedef struct
 #define PWM_INDEX_RED       1
 #define PWM_INDEX_BLUE      2
 
-static uint8_t _hit_id   = 0;
+static uint16_t _hit_id   = 0;
+static uint8_t _is_called_shot = 0;
 static uint8_t _led_red  = 0;
 static uint8_t _led_blue = 0;
 
@@ -125,12 +126,21 @@ void LaserService(void)
         uint8_t buf[BUF_SIZE] = {0};
         LaserRead(&buf[0],BUF_SIZE);
         SciCommand command = SciParse(&buf[0]);
-        if (command.address == ADDRESS_ALL && command.type != COMMAND_TYPE_INVALID)
+        if (command.type != COMMAND_TYPE_INVALID)
         {
             HandlerFn fn = HandlerSearch(command,&routes[0],route_len);
             if (fn != NULL)
             {
-                fn(command.data);
+                if (command.address == ADDRESS_ALL)
+                {
+                    fn(command.data);
+                    _is_called_shot = false;
+                }
+                else if (command.address == MY_ADDRESS)
+                {
+                    fn(command.data);
+                    _is_called_shot = true;
+                }
             }
         }
     }
@@ -265,7 +275,7 @@ void TrainWrite(uint8_t* buf)
     Chip_UART_TXEnable(TRAIN_UART);
     Delay(1);
     Chip_UART_SendBlocking(TRAIN_UART,&buf[0],strlen((char*)buf));
-    Delay(1);
+    Delay(3);
     Chip_SWM_MovablePinAssign(SWM_U0_TXD_O, pin_tx_idle); // Train TX
     Chip_SWM_Deinit();
     // All targets share a bus so we can't leave tx enabled
@@ -337,7 +347,7 @@ void LedReadRed(uint8_t data[2])
     brightness[0] = (_led_red / 10) + '0';
     brightness[1] = (_led_red % 10) + '0';
     uint8_t buf[BUF_SIZE] = {0};
-    SciReadResponseCreate(&buf[0],(uint8_t*)&brightness);
+    SciReadResponseCreate(&buf[0],DEVICE_RED_LED,(uint8_t*)&brightness);
     TrainWrite(&buf[0]);
 }
 
@@ -346,7 +356,7 @@ void LedWriteRed(uint8_t data[2])
     _led_red = ((data[0] - '0') * 10) + (data[1] - '0');
     LedManageRed();
     uint8_t buf[BUF_SIZE] = {0};
-    SciWriteResponseCreate(&buf[0],MY_ADDRESS);
+    SciWriteResponseCreate(&buf[0],DEVICE_RED_LED);
     TrainWrite(&buf[0]);
 }
 
@@ -356,7 +366,7 @@ void LedReadBlue(uint8_t data[2])
     brightness[0] = (_led_blue / 10) + '0';
     brightness[1] = (_led_blue % 10) + '0';
     uint8_t buf[BUF_SIZE] = {0};
-    SciReadResponseCreate(&buf[0],(uint8_t*)&brightness);
+    SciReadResponseCreate(&buf[0],DEVICE_BLUE_LED,(uint8_t*)&brightness);
     TrainWrite(&buf[0]);
 }
 
@@ -365,17 +375,17 @@ void LedWriteBlue(uint8_t data[2])
     _led_blue = ((data[0] - '0') * 10) + (data[1] - '0');
     LedManageBlue();
     uint8_t buf[BUF_SIZE] = {0};
-    SciWriteResponseCreate(&buf[0],MY_ADDRESS);
+    SciWriteResponseCreate(&buf[0],DEVICE_BLUE_LED);
     TrainWrite(&buf[0]);
 }
 
 void HitIdRead(uint8_t data[2])
 {
     uint8_t id[2] = {0};
-    id[0] = (_hit_id / 10) + '0';
+    id[0] = (_hit_id / 10) + (_is_called_shot ? 'A' : '0');
     id[1] = (_hit_id % 10) + '0';
     uint8_t buf[BUF_SIZE] = {0};
-    SciReadResponseCreate(&buf[0],(uint8_t*)&id);
+    SciReadResponseCreate(&buf[0], DEVICE_HIT_ID, (uint8_t*)&id);
     TrainWrite(&buf[0]);
 }
 
@@ -383,7 +393,7 @@ void HitIdWrite(uint8_t data[2])
 {
     _hit_id = ((data[0] - '0') * 10) + (data[1] - '0');
     uint8_t buf[BUF_SIZE] = {0};
-    SciWriteResponseCreate(&buf[0],MY_ADDRESS);
+    SciWriteResponseCreate(&buf[0], DEVICE_HIT_ID);
     TrainWrite(&buf[0]);
 }
 

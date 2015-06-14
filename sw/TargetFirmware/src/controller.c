@@ -127,6 +127,10 @@ void RfService(void)
         SciCommand command = SciParse(&buf[0]);
         if (command.type == COMMAND_TYPE_INVALID)
         {
+            //uint8_t err_buf[6] = "?:";
+            //SciErrorResponseCreate(&err_buf[2],command.error);
+            //uint8_t len = strlen(buf);
+            //strcpy(&buf[len-1],err_buf);
             memset(buf,0,sizeof(buf));
             SciErrorResponseCreate(&buf[0],command.error);
             RfWrite(&buf[0]);
@@ -155,7 +159,7 @@ void TargetService(void)
     if (TargetDataAvailable())
     {
         // Wait a little for the whole packet to arrive
-        Delay(3);
+        Delay(5);
         uint8_t buf[BUF_SIZE] = {0};
         TargetRead(&buf[0],BUF_SIZE);
         RfWrite(&buf[0]);
@@ -312,7 +316,7 @@ uint8_t TargetDataAvailable(void)
 void TargetHandoff(uint8_t* buf)
 {
     TargetWrite(&buf[0]);
-    Delay(10);
+    Delay(60);
     memset(buf,0,BUF_SIZE);
     TargetRead(&buf[0],BUF_SIZE);
     RfWrite(&buf[0]);
@@ -338,7 +342,7 @@ void VoltageRead(uint8_t data[2])
     reading[0] = (sample / 10) + '0';
     reading[1] = (sample % 10) + '0';
     uint8_t buf[BUF_SIZE] = {0};
-    SciReadResponseCreate(&buf[0],reading);
+    SciReadResponseCreate(&buf[0], DEVICE_VOLTAGE, reading);
     RfWrite(&buf[0]);
 }
 
@@ -348,7 +352,7 @@ static uint8_t _speed[2] = {'S','T'};
 void SpeedRead(uint8_t data[2])
 {
     uint8_t buf[BUF_SIZE] = {0};
-    SciReadResponseCreate(&buf[0],&_speed[0]);
+    SciReadResponseCreate(&buf[0], DEVICE_SPEED, &_speed[0]);
     RfWrite(&buf[0]);
 }
 
@@ -369,7 +373,7 @@ void SpeedWrite(uint8_t data[2])
     {
         ScheduleSingleEvent((i % 2 == 0) ? PwmDisable : PwmEnable, speed_sel[i]);
     }
-    SciWriteResponseCreate(&buf[0],MY_ADDRESS);
+    SciWriteResponseCreate(&buf[0], DEVICE_SPEED);
     RfWrite(&buf[0]);
 }
 
