@@ -85,9 +85,10 @@ Each command will generate one of three possible responses: A read response, a w
 
 |Offset|Component |
 |:----:|:--------:|
-|  0   |'W'       |
-|  1   |ERROR_CODE|
-|  2   |'F'       |
+|  0   |ADDRESS   |
+|  1   |'W'       |
+|  2   |ERROR_CODE|
+|  3   |'F'       |
 
 ### Error Codes
 
@@ -198,11 +199,11 @@ Write ID '08' to a target. This can only be accessed via the laser serial interf
 
 #### Read/Write Erroneous Data + Response
 
-    {0I}WTF
+    {0I}0WTF
 
 Read to invalid device reports a device error (train has no hit ID).
 
-    {9R}WAF
+    {9R}0WAF
 
 Read to invalid address reports an address error (there is no target #9).
 
