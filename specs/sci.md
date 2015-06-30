@@ -145,11 +145,11 @@ Returns the current train speed when read. Writing to this device will set the c
 
 #### R - Red LED Status (Target) - Read/Write
 
-Returns the current red LED status of the addressed target when read. Writing a 0 to this device will disable the LED. Writing non-0 to this device will enable the LED.
+Returns the current red LED status of the addressed target when read. Writing a 0 to this device will disable the LED. Writing non-zero to this device will enable the LED.
 
 #### B - Blue LED Status (Target) - Read/Write
 
-Returns the current blue LED status of the addressed target when read. Writing a 0 to this device will disable the LED. Writing non-0 to this device will enable the LED.
+Returns the current blue LED status of the addressed target when read. Writing a 0 to this device will disable the LED. Writing non-zero to this device will enable the LED.
 
 #### I - ID (Target Hit) - Read/Write
 
