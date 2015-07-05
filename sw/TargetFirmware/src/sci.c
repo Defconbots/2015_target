@@ -65,6 +65,7 @@ typedef struct
 #define ERROR_RESPONSE_STOP  'F'
 typedef struct
 {
+    uint8_t address;
     uint8_t start;
     uint8_t error;
     uint8_t stop;
@@ -209,6 +210,7 @@ void SciWriteResponseCreate(uint8_t* buf, uint8_t device)
 void SciErrorResponseCreate(uint8_t* buf, uint8_t data)
 {
     ErrorResponse* response = (ErrorResponse*)buf;
+    response->address = MY_ADDRESS;
     response->start = ERROR_RESPONSE_START;
     response->error = data;
     response->stop = ERROR_RESPONSE_STOP;

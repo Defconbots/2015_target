@@ -201,11 +201,8 @@ HandlerFn HandlerSearch(SciCommand command, CommandRoute* routes, uint8_t len)
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void PwmInit(void)
 {
-    Chip_SWM_Init();
-    Chip_SWM_MovablePinAssign(SWM_SCT_OUT0_O, pin_red_led);
-    Chip_SWM_MovablePinAssign(SWM_SCT_OUT1_O, pin_blue_led);
-    Chip_SWM_Deinit();
-
+    LedSetBlue(0);
+    LedSetRed(0);
     Chip_SCTPWM_Init(LPC_SCT);
     Chip_SCTPWM_SetRate(LPC_SCT, PWM_RATE);
     Chip_SCTPWM_SetOutPin(LPC_SCT, PWM_INDEX_RED, 0);
@@ -329,16 +326,41 @@ void LedManageBlue(void)
 
 void LedSetRed(uint8_t brightness)
 {
-    uint32_t ticks = Chip_SCTPWM_GetTicksPerCycle(LPC_SCT);
-    uint32_t val = (ticks * brightness) / 100;
-    Chip_SCTPWM_SetDutyCycle(LPC_SCT, PWM_INDEX_RED, val);
+    Chip_SWM_Init();
+    if (brightness)
+    {
+        Chip_SWM_MovablePinAssign(SWM_SCT_OUT0_O, pin_red_led);
+        uint32_t ticks = Chip_SCTPWM_GetTicksPerCycle(LPC_SCT);
+        uint32_t val = (ticks * brightness) / 100;
+        Chip_SCTPWM_SetDutyCycle(LPC_SCT, PWM_INDEX_RED, val);
+    }
+    else
+    {
+        Chip_SWM_MovablePinAssign(SWM_SCT_OUT0_O,pin_red_idle);
+        IO_OUTPUT(pin_red_led);
+        IO_LOW(pin_red_led);
+        Chip_SWM_Deinit();
+    }
+    Chip_SWM_Deinit();
 }
 
 void LedSetBlue(uint8_t brightness)
 {
-    uint32_t ticks = Chip_SCTPWM_GetTicksPerCycle(LPC_SCT);
-    uint32_t val = (ticks * brightness) / 100;
-    Chip_SCTPWM_SetDutyCycle(LPC_SCT, PWM_INDEX_BLUE, val);
+    Chip_SWM_Init();
+    if (brightness)
+    {
+        Chip_SWM_MovablePinAssign(SWM_SCT_OUT1_O, pin_blue_led);
+        uint32_t ticks = Chip_SCTPWM_GetTicksPerCycle(LPC_SCT);
+        uint32_t val = (ticks * brightness) / 100;
+        Chip_SCTPWM_SetDutyCycle(LPC_SCT, PWM_INDEX_BLUE, val);
+    }
+    else
+    {
+        Chip_SWM_MovablePinAssign(SWM_SCT_OUT1_O,pin_blue_idle);
+        IO_OUTPUT(pin_blue_led);
+        IO_LOW(pin_blue_led);
+    }
+    Chip_SWM_Deinit();
 }
 
 void LedReadRed(uint8_t data[2])
