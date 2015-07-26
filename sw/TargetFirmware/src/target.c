@@ -47,10 +47,13 @@ typedef struct
 #define PWM_INDEX_RED       1
 #define PWM_INDEX_BLUE      2
 
+enum {ALL_YOUR_BASE,ARE_BELONG,TO_US};
+#define YOU_ARE_ON_THE_WAY  0x41
+#define TO_DESTRUCTION      0x61
+static uint8_t  _the_bomb = 0;
 static uint16_t _hit_id   = 0;
-static uint8_t _is_called_shot = 0;
-static uint8_t _led_red  = 0;
-static uint8_t _led_blue = 0;
+static uint8_t  _led_red  = 0;
+static uint8_t  _led_blue = 0;
 
 
 static void      LaserService(void);
@@ -133,16 +136,10 @@ void LaserService(void)
             HandlerFn fn = HandlerSearch(command,&routes[0],route_len);
             if (fn != NULL)
             {
-                if (command.address == ADDRESS_ALL)
-                {
-                    fn(command.data);
-                    _is_called_shot = false;
-                }
-                else if (command.address == MY_ADDRESS)
-                {
-                    fn(command.data);
-                    _is_called_shot = true;
-                }
+                _the_bomb = command.address == ADDRESS_ALL ? ALL_YOUR_BASE :
+                            command.address == MY_ADDRESS  ? ARE_BELONG:
+                                                             TO_US;
+                fn(command.data);
             }
         }
     }
@@ -206,7 +203,6 @@ void PwmInit(void)
     Chip_SCTPWM_SetDutyCycle(LPC_SCT, PWM_INDEX_RED, 0);
     Chip_SCTPWM_SetOutPin(LPC_SCT, PWM_INDEX_BLUE, 1);
     Chip_SCTPWM_SetDutyCycle(LPC_SCT, PWM_INDEX_BLUE, 0);
-
     Chip_SCTPWM_Start(LPC_SCT);
 }
 
@@ -410,7 +406,7 @@ void LedWriteBlue(uint8_t data[2])
 void HitIdRead(uint8_t data[2])
 {
     uint8_t id[2] = {0};
-    id[0] = (_hit_id / 10) + (_is_called_shot ? 'A' : '0');
+    id[0] = (_hit_id / 10) + (_the_bomb == ALL_YOUR_BASE ? '0' : _the_bomb == ARE_BELONG ? YOU_ARE_ON_THE_WAY : TO_DESTRUCTION);
     id[1] = (_hit_id % 10) + '0';
     uint8_t buf[BUF_SIZE] = {0};
     SciReadResponseCreate(&buf[0], DEVICE_HIT_ID, (uint8_t*)&id);
@@ -420,6 +416,7 @@ void HitIdRead(uint8_t data[2])
 void HitIdWrite(uint8_t data[2])
 {
     _hit_id = ((data[0] - '0') * 10) + (data[1] - '0');
+    _the_bomb = ALL_YOUR_BASE;
     uint8_t buf[BUF_SIZE] = {0};
     SciWriteResponseCreate(&buf[0], DEVICE_HIT_ID);
     TrainWrite(&buf[0]);
