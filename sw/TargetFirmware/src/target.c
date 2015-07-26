@@ -58,6 +58,8 @@ static void      TrainService(void);
 static HandlerFn HandlerSearch(SciCommand command, CommandRoute* routes, uint8_t len);
 static void      PwmInit(void);
 static void      UartInit(void);
+static void      TrainTxBusIdle(void);
+static void      TrainTxBusActive(void);
 static void      TrainWrite(uint8_t* buf);
 static uint8_t   TrainRead(uint8_t* buf, uint8_t len);
 static uint8_t   TrainDataAvailable(void);
@@ -161,18 +163,13 @@ void TrainService(void)
 
     if (TrainDataAvailable())
     {
+        TrainTxBusIdle();
         // Wait a little for the whole packet to arrive
-        Delay(3);
+        Delay(5);
         uint8_t buf[BUF_SIZE] = {0};
         TrainRead(&buf[0],BUF_SIZE);
         SciCommand command = SciParse(&buf[0]);
-        if (command.type == COMMAND_TYPE_INVALID)
-        {
-            memset(buf,0,sizeof(buf));
-            SciErrorResponseCreate(&buf[0],command.error);
-            TrainWrite(&buf[0]);
-        }
-        else if (command.address == MY_ADDRESS)
+        if (command.type != COMMAND_TYPE_INVALID && command.address == MY_ADDRESS)
         {
             HandlerFn fn = HandlerSearch(command,&routes[0],route_len);
             if (fn != NULL)
@@ -265,18 +262,27 @@ void LASER_UART_HANDLER(void)
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Communication
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-void TrainWrite(uint8_t* buf)
+void TrainTxBusIdle(void)
+{
+    Chip_SWM_Init();
+    Chip_SWM_MovablePinAssign(SWM_U0_TXD_O, pin_tx_idle); // Train TX
+    Chip_SWM_Deinit();
+    Chip_UART_TXDisable(TRAIN_UART);
+}
+
+void TrainTxBusActive(void)
 {
     Chip_SWM_Init();
     Chip_SWM_MovablePinAssign(SWM_U0_TXD_O, pin_tx); // Train TX
-    Chip_UART_TXEnable(TRAIN_UART);
-    Delay(1);
-    Chip_UART_SendBlocking(TRAIN_UART,&buf[0],strlen((char*)buf));
-    Delay(3);
-    Chip_SWM_MovablePinAssign(SWM_U0_TXD_O, pin_tx_idle); // Train TX
     Chip_SWM_Deinit();
-    // All targets share a bus so we can't leave tx enabled
-    Chip_UART_TXDisable(TRAIN_UART);
+    Chip_UART_TXEnable(TRAIN_UART);
+}
+
+void TrainWrite(uint8_t* buf)
+{
+    TrainTxBusActive();
+    Delay(2);
+    Chip_UART_SendBlocking(TRAIN_UART,&buf[0],strlen((char*)buf));
 }
 
 uint8_t TrainRead(uint8_t* buf, uint8_t len)
