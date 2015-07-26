@@ -49,15 +49,22 @@ typedef struct
 #define PWN_INDEX           1
 #define SPEED_SIG_REPEAT    10
 
+static uint16_t speed_r1[] = {0,6,2,1,3,1,3,1};
+static uint16_t speed_st[] = {0,6,2,3,1,1,3,3};
+static uint16_t speed_f1[] = {0,6,2,3,1,3,1,1};
+static uint16_t speed_f2[] = {0,6,2,1,3,3,1,3};
+static uint16_t *cur_speed_pattern = speed_st;
+
 static void      RfService(void);
 static void      TargetService(void);
 static HandlerFn HandlerSearch(SciCommand command, CommandRoute* routes, uint8_t len);
 static void      AdcInit(void);
 static void      AdcEnable(void);
 static void      AdcDisable(void);
-static void      PwmInit(void);
-static void      PwmEnable(void);
-static void      PwmDisable(void);
+static void      LedIrInit(void);
+static void      LedIrEnable(void);
+static void      LedIrDisable(void);
+static void      LedIrFunction(void);
 static void      UartInit(void);
 static void      RfWrite(uint8_t* buf);
 static uint8_t   RfRead(uint8_t* buf, uint8_t len);
@@ -76,7 +83,7 @@ static void      SpeedWrite(uint8_t data[2]);
 inline void Run(void)
 {
     ScheduleInit();
-    PwmInit();
+    LedIrInit();
     UartInit();
     AdcInit();
 
@@ -99,6 +106,8 @@ inline void Run(void)
         }
     }
 #endif
+
+    LedIrFunction();
 
     for(;;)
     {
@@ -182,26 +191,35 @@ HandlerFn HandlerSearch(SciCommand command, CommandRoute* routes, uint8_t len)
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Init
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-void PwmInit(void)
+void LedIrInit(void)
 {
-    Chip_Clock_EnablePeriphClock(SYSCTL_CLOCK_SWM);
-    Chip_SWM_MovablePinAssign(SWM_SCT_OUT0_O, pin_ir);
-    Chip_Clock_DisablePeriphClock(SYSCTL_CLOCK_SWM);
-
-    Chip_SCTPWM_Init(LPC_SCT);
-    Chip_SCTPWM_SetRate(LPC_SCT, PWM_RATE);
-    Chip_SCTPWM_SetOutPin(LPC_SCT, PWN_INDEX, 0);
-    Chip_SCTPWM_SetDutyCycle(LPC_SCT, PWN_INDEX, Chip_SCTPWM_GetTicksPerCycle(LPC_SCT)/2);
+    Chip_SWM_Init();
+    Chip_GPIO_Init();
+    IO_OUTPUT(pin_ir);
+    IO_LOW(pin_ir);
+    Chip_SWM_Deinit();
 }
 
-void PwmEnable(void)
+void LedIrEnable(void)
 {
-    Chip_SCTPWM_Start(LPC_SCT);
+    IO_HIGH(pin_ir);
 }
 
-void PwmDisable(void)
+void LedIrDisable(void)
 {
-    Chip_SCTPWM_Stop(LPC_SCT);
+    IO_LOW(pin_ir);
+}
+
+void LedIrFunction(void)
+{
+    LedIrDisable();
+    uint16_t offset = 1;
+    for (uint8_t j = 0;j < 8;j++)
+    {
+        offset += cur_speed_pattern[j];
+        ScheduleSingleEvent((j % 2 == 0) ? LedIrEnable : LedIrDisable, offset);
+    }
+    ScheduleSingleEvent(LedIrFunction, 280);
 }
 
 void AdcInit(void)
@@ -361,18 +379,11 @@ void SpeedWrite(uint8_t data[2])
     uint8_t buf[BUF_SIZE] = {0};
     memcpy(&_speed[0],&data[0],2);
 
-    const uint16_t speed_r1[] = {275,281,283,284,287,288,291,292,293};
-    const uint16_t speed_st[] = {275,281,283,286,287,288,291,294,297};
-    const uint16_t speed_f1[] = {275,281,283,286,287,290,291,292,293};
-    const uint16_t speed_f2[] = {275,281,283,284,287,290,291,294,297};
-    const uint16_t* speed_sel = (memcmp(_speed,SPEED_SLOW_ASTERN,2) == 0) ? speed_r1 :
-                                (memcmp(_speed,SPEED_HALF_AHEAD,2)  == 0) ? speed_f1 :
-                                (memcmp(_speed,SPEED_FULL_AHEAD,2)  == 0) ? speed_f2 : speed_st;
+    cur_speed_pattern = (memcmp(_speed,SPEED_SLOW_ASTERN,2) == 0) ? speed_r1 :
+                        (memcmp(_speed,SPEED_HALF_AHEAD,2)  == 0) ? speed_f1 :
+                        (memcmp(_speed,SPEED_FULL_AHEAD,2)  == 0) ? speed_f2 :
+                                                                    speed_st;
 
-    for (uint8_t i = 0;i < 9;i++)
-    {
-        ScheduleSingleEvent((i % 2 == 0) ? PwmDisable : PwmEnable, speed_sel[i]);
-    }
     SciWriteResponseCreate(&buf[0], DEVICE_SPEED);
     RfWrite(&buf[0]);
 }

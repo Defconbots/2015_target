@@ -166,7 +166,7 @@ void ScheduleSingleEventCancel(Fn func)
 uint8_t get_map_size(void)
 {
     uint8_t sum = 0;
-    uint16_t map = _map;
+    uint32_t map = _map;
     for (sum = 0; map; sum++)
     {
         map &= map - 1;
