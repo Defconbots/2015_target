@@ -47,7 +47,6 @@ typedef struct
 // Pwm settings (train IR)
 #define PWM_RATE            40000
 #define PWN_INDEX           1
-#define SPEED_SIG_REPEAT    10
 
 static uint16_t speed_r1[] = {0,6,2,1,3,1,3,1};
 static uint16_t speed_st[] = {0,6,2,3,1,1,3,3};
@@ -193,21 +192,28 @@ HandlerFn HandlerSearch(SciCommand command, CommandRoute* routes, uint8_t len)
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void LedIrInit(void)
 {
-    Chip_SWM_Init();
-    Chip_GPIO_Init();
-    IO_OUTPUT(pin_ir);
-    IO_LOW(pin_ir);
-    Chip_SWM_Deinit();
+    Chip_SCTPWM_Init(LPC_SCT);
+    Chip_SCTPWM_SetRate(LPC_SCT, PWM_RATE);
+    Chip_SCTPWM_SetDutyCycle(LPC_SCT, PWN_INDEX, Chip_SCTPWM_GetTicksPerCycle(LPC_SCT)/2);
 }
 
 void LedIrEnable(void)
 {
-    IO_HIGH(pin_ir);
+    Chip_SWM_Init();
+    Chip_SWM_MovablePinAssign(SWM_SCT_OUT0_O, pin_ir);
+    Chip_SWM_Deinit();
+    Chip_SCTPWM_SetOutPin(LPC_SCT, PWN_INDEX, 0);
+    Chip_SCTPWM_Start(LPC_SCT);
 }
 
 void LedIrDisable(void)
 {
-    IO_LOW(pin_ir);
+    Chip_SCTPWM_Stop(LPC_SCT);
+    Chip_SWM_Init();
+    Chip_SWM_MovablePinAssign(SWM_SCT_OUT0_O, pin_ir_idle);
+    IO_OUTPUT(pin_ir);
+    IO_HIGH(pin_ir);
+    Chip_SWM_Deinit();
 }
 
 void LedIrFunction(void)
